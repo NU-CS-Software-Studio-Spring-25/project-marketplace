@@ -4,3 +4,4 @@ Things to work on:
 - Calendar
 - Music for each day + times (each of which have links to more info about the event)
 - Left button to go back a day/right button to go forward a day
+- Communication: text gc
