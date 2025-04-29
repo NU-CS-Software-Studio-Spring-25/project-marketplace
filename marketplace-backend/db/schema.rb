@@ -10,8 +10,70 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 0) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_29_174535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "courses", force: :cascade do |t|
+    t.string "course_number"
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_number"], name: "index_courses_on_course_number", unique: true
+  end
+
+  create_table "courses_instructors", id: false, force: :cascade do |t|
+    t.bigint "course_id", null: false
+    t.bigint "instructor_id", null: false
+    t.index ["course_id", "instructor_id"], name: "index_courses_instructors_on_course_id_and_instructor_id"
+    t.index ["instructor_id", "course_id"], name: "index_courses_instructors_on_instructor_id_and_course_id"
+  end
+
+  create_table "courses_labels", id: false, force: :cascade do |t|
+    t.bigint "course_id", null: false
+    t.bigint "label_id", null: false
+    t.index ["course_id", "label_id"], name: "index_courses_labels_on_course_id_and_label_id"
+    t.index ["label_id", "course_id"], name: "index_courses_labels_on_label_id_and_course_id"
+  end
+
+  create_table "courses_quarters", id: false, force: :cascade do |t|
+    t.bigint "course_id", null: false
+    t.bigint "quarter_id", null: false
+    t.index ["course_id", "quarter_id"], name: "index_courses_quarters_on_course_id_and_quarter_id"
+    t.index ["quarter_id", "course_id"], name: "index_courses_quarters_on_quarter_id_and_course_id"
+  end
+
+  create_table "course_prerequisites", force: :cascade do |t|
+    t.bigint "course_id", null: false
+    t.bigint "prerequisite_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_course_prerequisites_on_course_id"
+    t.index ["prerequisite_id"], name: "index_course_prerequisites_on_prerequisite_id"
+  end
+
+  create_table "instructors", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "display_name"
+    t.index ["name"], name: "index_labels_on_name", unique: true
+  end
+
+  create_table "quarters", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "course_prerequisites", "courses"
+  add_foreign_key "course_prerequisites", "courses", column: "prerequisite_id"
 end
