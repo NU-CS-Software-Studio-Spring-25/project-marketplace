@@ -1,0 +1,80 @@
+<%= form_with(model: course) do |form| %>
+  <% if course.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h4>
+      <ul>
+        <% course.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :course_number, class: "form-label" %>
+    <%= form.text_field :course_number, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class: "form-control", rows: 5 %>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Instructors</label>
+    <div class="border p-3 rounded">
+      <% @instructors.each do |instructor| %>
+        <div class="form-check">
+          <%= check_box_tag 'instructor_ids[]', instructor.id, course.instructors.include?(instructor), id: "instructor_#{instructor.id}", class: "form-check-input" %>
+          <%= label_tag "instructor_#{instructor.id}", instructor.name, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Quarters Offered</label>
+    <div class="border p-3 rounded">
+      <% @quarters.each do |quarter| %>
+        <div class="form-check">
+          <%= check_box_tag 'quarter_ids[]', quarter.id, course.quarters.include?(quarter), id: "quarter_#{quarter.id}", class: "form-check-input" %>
+          <%= label_tag "quarter_#{quarter.id}", quarter.name, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Labels</label>
+    <div class="border p-3 rounded">
+      <% @labels.each do |label| %>
+        <div class="form-check">
+          <%= check_box_tag 'label_ids[]', label.id, course.labels.include?(label), id: "label_#{label.id}", class: "form-check-input" %>
+          <%= label_tag "label_#{label.id}", label.display_name, class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Prerequisites</label>
+    <div class="border p-3 rounded">
+      <% @available_prerequisites.each do |prerequisite| %>
+        <div class="form-check">
+          <%= check_box_tag 'prerequisite_ids[]', prerequisite.id, course.prerequisites.include?(prerequisite), id: "prerequisite_#{prerequisite.id}", class: "form-check-input" %>
+          <%= label_tag "prerequisite_#{prerequisite.id}", "#{prerequisite.course_number} - #{prerequisite.name}", class: "form-check-label" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", courses_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

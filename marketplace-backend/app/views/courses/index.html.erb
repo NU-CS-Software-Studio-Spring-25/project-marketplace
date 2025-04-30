@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  <h1>Courses</h1>
+  
+  <div class="mb-3">
+    <%= link_to "New course", new_course_path, class: "btn btn-primary" %>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% @courses.each do |course| %>
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-header">
+            <h5 class="card-title"><%= course.course_number %></h5>
+          </div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted"><%= course.name %></h6>
+            <p class="card-text"><%= truncate(course.description, length: 150) %></p>
+            
+            <% if course.labels.any? %>
+              <div class="mb-2">
+                <% course.labels.each do |label| %>
+                  <span class="badge bg-info text-dark me-1"><%= label.display_name %></span>
+                <% end %>
+              </div>
+            <% end %>
+            
+            <% if course.instructors.any? %>
+              <p class="card-text">
+                <small class="text-muted">
+                  Instructors: <%= course.instructors.map(&:name).join(", ") %>
+                </small>
+              </p>
+            <% end %>
+            
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <%= link_to "Show", course, class: "btn btn-sm btn-outline-primary" %>
+              <%= link_to "Edit", edit_course_path(course), class: "btn btn-sm btn-outline-secondary" %>
+              <%= button_to "Delete", course, method: :delete, class: "btn btn-sm btn-outline-danger", form: { data: { turbo_confirm: "Are you sure?" } } %>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            <% if course.quarters.any? %>
+              Quarters: <%= course.quarters.map(&:name).join(", ") %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

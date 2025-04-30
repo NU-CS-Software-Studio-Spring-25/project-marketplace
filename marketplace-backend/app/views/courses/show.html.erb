@@ -1,0 +1,67 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2><%= @course.course_number %> - <%= @course.name %></h2>
+      <div>
+        <%= link_to "Edit", edit_course_path(@course), class: "btn btn-outline-secondary" %>
+        <%= link_to "Back", courses_path, class: "btn btn-outline-primary" %>
+      </div>
+    </div>
+    
+    <div class="card-body">
+      <div class="mb-4">
+        <h5>Description</h5>
+        <p class="card-text"><%= @course.description %></p>
+      </div>
+
+      <% if @course.instructors.any? %>
+        <div class="mb-4">
+          <h5>Instructors</h5>
+          <ul class="list-group">
+            <% @course.instructors.each do |instructor| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <%= instructor.name %>
+                <span class="text-muted"><%= instructor.email %></span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% if @course.quarters.any? %>
+        <div class="mb-4">
+          <h5>Offered in</h5>
+          <div>
+            <% @course.quarters.each do |quarter| %>
+              <span class="badge bg-secondary me-1"><%= quarter.name %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if @course.labels.any? %>
+        <div class="mb-4">
+          <h5>Labels</h5>
+          <div>
+            <% @course.labels.each do |label| %>
+              <span class="badge bg-info text-dark me-1"><%= label.display_name %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if @course.prerequisites.any? %>
+        <div class="mb-4">
+          <h5>Prerequisites</h5>
+          <ul class="list-group">
+            <% @course.prerequisites.each do |prerequisite| %>
+              <li class="list-group-item">
+                <%= link_to "#{prerequisite.course_number} - #{prerequisite.name}", prerequisite %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
