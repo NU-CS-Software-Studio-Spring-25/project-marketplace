@@ -1,9 +1,13 @@
+.container{
+    height: 100%;  /* Full height */
+}
 
 .card{
     box-shadow: 0 8px 9px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
     outline: 1px groove rgb(211, 211, 211);
     background: white;  /* Ensure solid background for shadow visibility */
     width: 75%;
+    margin: 0 auto;  /* Center the card */
 }
 
 .card-header{
