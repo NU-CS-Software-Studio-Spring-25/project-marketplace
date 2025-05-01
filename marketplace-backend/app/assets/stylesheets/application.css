@@ -11,4 +11,5 @@
 
 
 
- @import "courses/index";
+@import "courses/index";
+@import "courses/show";
