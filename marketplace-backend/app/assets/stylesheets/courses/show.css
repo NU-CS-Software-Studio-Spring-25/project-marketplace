@@ -1,0 +1,14 @@
+
+.card{
+    box-shadow: 0 8px 9px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+    outline: 1px groove rgb(211, 211, 211);
+    background: white;  /* Ensure solid background for shadow visibility */
+    width: 75%;
+}
+
+.card-header{
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 200;       /* Bold */
+    margin-bottom: 1rem;    /* Space below the title */
+    text-align: left;     /* Center-align */
+}
