@@ -9,3 +9,5 @@ MVP Functions:
 - Matching Algorithm: An algorithm that improves and learns student preferences by analyzing their swiping actions and adapts future course recommendations accordingly.
 - Course Labels: Courses are labeled with tags like "Software Development", "Mathy", and "Resume Project" that are used by the matching algorithm to find relevant courses.
 - Course Details: Each course card displays essential information including course code, title, brief description, instructor, schedule, and prerequisite information.
+
+Team Members: Jovy Zhou, Henry Ma, Ananya Bhatia, Ken Nakahira
