@@ -5,21 +5,21 @@
     <%= link_to "New course", new_course_path, class: "btn btn-primary" %>
   </div>
 
-  <div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col">
     <% @courses.each do |course| %>
-      <div class="col">
+      <div class="col g-3 mb-5">
         <div class="card h-100">
           <div class="card-header">
-            <h5 class="card-title"><%= course.course_number %></h5>
+            <h5 class="custom-card-title"><%= course.course_number %></h5>
           </div>
           <div class="card-body">
             <h6 class="card-subtitle mb-2 text-muted"><%= course.name %></h6>
-            <p class="card-text"><%= truncate(course.description, length: 150) %></p>
+            <p class="card-text mb-2 text-muted"><%= course.description %></p>
             
             <% if course.labels.any? %>
               <div class="mb-2">
                 <% course.labels.each do |label| %>
-                  <span class="badge bg-info text-dark me-1"><%= label.display_name %></span>
+                  <span class="badge me-1" style="background-color: #1A1A1A; color: white;"><%= label.display_name %></span>
                 <% end %>
               </div>
             <% end %>
