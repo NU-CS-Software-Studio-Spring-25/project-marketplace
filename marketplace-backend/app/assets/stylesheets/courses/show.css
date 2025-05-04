@@ -10,9 +10,8 @@
     margin: 0 auto;  /* Center the card */
 }
 
-.card-header{
+.custom-card-title{
     font-family: 'Varela Round', sans-serif;
-    font-weight: 200;       /* Bold */
-    margin-bottom: 1rem;    /* Space below the title */
-    text-align: left;     /* Center-align */
+    font-weight: 900;       /* Bold */
 }
+
