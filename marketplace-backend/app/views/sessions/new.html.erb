@@ -3,7 +3,7 @@
         <h1 class="title-course text-center mt-3">welcome to<br>course marketplace</h1>
         <h2 class="title-course text-center fs-3">sign in</h2>
         <% if flash[:alert] %>
-            <div class="alert alert-danger"><%= flash[:alert] %></div>
+            <div class="alert alert-danger py-2 small" role="alert"><%= flash[:alert] %></div>
         <% end %>
         <div class="d-flex justify-content-center"> 
             <%= form_with url: login_path, method: :post, local: true, class:"needs_validation w-100" do |f| %>

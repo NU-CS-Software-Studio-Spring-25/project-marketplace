@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Set the root path to redirect to courses
-  root 'courses#index'
+  root 'sessions#new'
 
   resources :courses do
     collection do
