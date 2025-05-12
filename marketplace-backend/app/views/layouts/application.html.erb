@@ -27,6 +27,16 @@
   </head>
 
   <body>
+    <%= render 'shared/navbar' %>
+    
+    <% if flash[:alert] %>
+      <div class="container mt-3">
+        <div class="alert alert-danger">
+          <%= flash[:alert] %>
+        </div>
+      </div>
+    <% end %>
+    
     <%= yield %>
   </body>
 </html>

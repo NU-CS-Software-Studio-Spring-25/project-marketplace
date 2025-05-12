@@ -1,0 +1,49 @@
+<% content_for :title, "Saved Classes" %>
+
+<div class="container mt-4">
+  <h1 class="mb-4">My Saved Classes</h1>
+  
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  
+  <% if @enrollments.nil? || @enrollments.empty? %>
+    <div class="alert alert-info">
+      You haven't saved any classes yet. <a href="<%= courses_path %>">Browse courses</a> to add some.
+    </div>
+  <% else %>
+    <div class="row">
+      <% @enrollments.each do |enrollment| %>
+        <% if enrollment.course.present? %>
+          <div class="col-md-6 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= enrollment.course.course_number.presence || "No Course Number" %> - 
+                  <%= enrollment.course.name.presence || "No Name" %>
+                </h5>
+                <p class="card-text">
+                  <% if enrollment.course.description.present? %>
+                    <strong>Description:</strong> <%= enrollment.course.description.truncate(150) %>
+                  <% end %>
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <%= link_to "View Details", course_path(enrollment.course), class: "btn btn-primary" %>
+                  <%= button_to "Remove", enrollment_path(enrollment), method: :delete, 
+                      data: { turbo_confirm: "Are you sure you want to remove this course from your saved classes?" }, 
+                      class: "btn btn-danger" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  
+  <div class="mt-4">
+    <%= link_to "Back to Courses", courses_path, class: "btn btn-secondary" %>
+  </div>
+</div> 

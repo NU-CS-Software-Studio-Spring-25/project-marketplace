@@ -18,6 +18,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    session[:user_id] = nil
+    redirect_to login_path, notice: "You have been logged out."
   end
 
   def google_auth
