@@ -3,6 +3,18 @@ class SessionsController < ApplicationController
   end
 
   def create
+    user = User.find_by(email: params[:email])
+    
+    # Check if user exists and password is correct
+    if user && user.password_digest == params[:password]
+      # Store user id in session
+      session[:user_id] = user.id
+      redirect_to courses_path
+    else
+      # If authentication fails, show error message
+      flash[:alert] = "invalid email or password"
+      redirect_to login_path
+    end
   end
 
   def destroy
