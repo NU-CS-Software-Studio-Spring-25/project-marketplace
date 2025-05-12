@@ -2,4 +2,8 @@
 
 
 #config file
-/marketplace-backend/config/database.yml
+
+/marketplace-backend\config\database.yml
+#env
+.env
+
