@@ -341,4 +341,10 @@ comp_sci_330.labels << label_instances[:ui]
 comp_sci_330.labels << label_instances[:ux]
 comp_sci_330.labels << label_instances[:project_based]
 
+
+user1 = User.create!(name: "Alice", email: "alice@test.com", password_digest: "password")
+user1.courses << comp_sci_330
+user1.courses<<comp_sci_329
+
+
 puts "Seed data created successfully!"

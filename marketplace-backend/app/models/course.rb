@@ -5,4 +5,7 @@ class Course < ApplicationRecord
     
     has_many :course_prerequisites
     has_many :prerequisites, through: :course_prerequisites, source: :prerequisite
+
+    has_many :enrollments
+    has_many :users, through: :enrollments
 end
