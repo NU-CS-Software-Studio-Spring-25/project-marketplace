@@ -1,0 +1,53 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Swipe Courses</h2>
+
+  <div id="swipes-card-container">
+    <% @courses.each_with_index do |course, index| %>
+      <div class="card swipe-card mb-4 <%= 'd-none' if index != 0 %>">
+        <div class="card-header">
+          <%= course.course_number %> - <%= course.name %>
+        </div>
+        <div class="card-body">
+          <p><%= course.description %></p>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-danger skip-button">Skip</button>
+            <%= button_to "Save", enrollments_path(course_id: course.id), method: :post, form_class: "save-form", class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("turbo:load", () => {
+    const cards = document.querySelectorAll(".swipe-card");
+    let currentIndex = 0;
+
+    function showNextCard() {
+      if (currentIndex < cards.length) {
+        cards[currentIndex].classList.add("d-none");
+        currentIndex++;
+        if (currentIndex < cards.length) {
+          cards[currentIndex].classList.remove("d-none");
+        } else {
+          document.getElementById("swipes-card-container").innerHTML =
+            "<div class='alert alert-info'>No more courses to swipe.</div>";
+        }
+      }
+    }
+
+    // Hook up Skip buttons
+    document.querySelectorAll(".skip-button").forEach((button, idx) => {
+      button.addEventListener("click", showNextCard);
+    });
+
+    // Hook up Save buttons (after form submit)
+    document.querySelectorAll(".save-form").forEach((form) => {
+      form.addEventListener("submit", (e) => {
+        setTimeout(() => showNextCard(), 100); // Delay so the form submits
+      });
+    });
+  });
+</script>
+
