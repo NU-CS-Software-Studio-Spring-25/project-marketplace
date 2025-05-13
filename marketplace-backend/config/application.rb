@@ -9,7 +9,11 @@ Bundler.require(*Rails.groups)
 module MarketplaceBackend
   class Application < Rails::Application
 
-    Dotenv::Railtie.load
+    # Only load dotenv if it's available (required in development/test, not in production)
+    if defined?(Dotenv)
+      require 'dotenv/rails'
+      Dotenv::Railtie.load
+    end
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 

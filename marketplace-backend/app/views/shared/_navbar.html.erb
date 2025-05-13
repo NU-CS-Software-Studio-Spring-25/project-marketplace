@@ -13,12 +13,12 @@
             <i class="fa-solid fa-book"></i> Browse
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link nav-link-hinge <%= current_page?(swipes_path) ? 'active' : '' %>" href="<%= swipes_path %>">
-            <i class="fa-solid fa-fire"></i> Swipe
-          </a>
-        </li>
         <% if current_user %>
+          <li class="nav-item">
+            <a class="nav-link nav-link-hinge <%= current_page?(swipes_path) ? 'active' : '' %>" href="<%= swipes_path %>">
+              <i class="fa-solid fa-fire"></i> Swipe
+            </a>
+          </li>
           <li class="nav-item">
             <a class="nav-link nav-link-hinge <%= current_page?(saved_classes_path) ? 'active' : '' %>" href="<%= saved_classes_path %>">
               <i class="fa-solid fa-heart"></i> Matches
