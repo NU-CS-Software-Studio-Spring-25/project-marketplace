@@ -8,12 +8,44 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+# Add Faker gem if not already included
+# Make sure to add gem 'faker' to your Gemfile and run bundle install
+require 'faker'
+
+# Set a fixed seed for reproducible results
+Faker::Config.random = Random.new(42)
+
 # Clear existing data
 CoursePrerequisite.destroy_all
+Enrollment.destroy_all
 Course.destroy_all
 Instructor.destroy_all
 Label.destroy_all
 Quarter.destroy_all
+User.destroy_all
+
+# Create users
+puts "Creating users..."
+users = []
+# Create admin user
+users << User.create!(
+  name: 'Admin',
+  email: 'admin@example.com',
+  password_digest: 'password',
+)
+
+# Create 40 fake users
+40.times do |i|
+  name = Faker::Name.name
+  email = Faker::Internet.email(name: name)
+  users << User.create!(
+    name: name,
+    email: email,
+    password_digest: 'password',
+  )
+end
+
+puts "Created #{User.count} users"
 
 # Create quarters
 quarters = ['Fall', 'Winter', 'Spring', 'Summer']
@@ -23,6 +55,7 @@ quarters.each do |q|
 end
 
 # Create instructors
+# Original instructors
 instructors = [
   { name: 'Branden Ghena', email: 'branden.ghena@northwestern.edu' },
   { name: 'Joe Hummel', email: 'joe.hummel@northwestern.edu' },
@@ -51,6 +84,15 @@ instructors = [
   { name: 'Matthew Kay', email: 'matthew.kay@northwestern.edu' },
   { name: 'Victoria Chávez', email: 'victoria.chavez@northwestern.edu' }
 ]
+
+# Add 20 more fictional instructors
+20.times do
+  instructors << {
+    name: Faker::Name.name,
+    email: Faker::Internet.email(domain: 'northwestern.edu')
+  }
+end
+
 instructor_instances = {}
 instructors.each do |i|
   instructor_instances[i[:name].downcase.gsub(' ', '_').to_sym] = Instructor.create!(i)
@@ -89,6 +131,22 @@ labels = [
   { name: 'project_based', display_name: 'Project-Based Learning' }
 ]
 
+# Add 10 more fictional labels
+additional_labels = [
+  { name: 'machine_learning', display_name: 'Machine Learning' },
+  { name: 'artificial_intelligence', display_name: 'Artificial Intelligence' },
+  { name: 'databases', display_name: 'Databases' },
+  { name: 'quantum_computing', display_name: 'Quantum Computing' },
+  { name: 'blockchain', display_name: 'Blockchain' },
+  { name: 'mobile_development', display_name: 'Mobile Development' },
+  { name: 'embedded_systems', display_name: 'Embedded Systems' },
+  { name: 'javascript', display_name: 'JavaScript' },
+  { name: 'java', display_name: 'Java' },
+  { name: 'theory', display_name: 'Theory' }
+]
+
+labels.concat(additional_labels)
+
 label_instances = {}
 labels.each do |l|
   label_instances[l[:name].to_sym] = Label.create!(
@@ -96,7 +154,9 @@ labels.each do |l|
     display_name: l[:display_name]
   )
 end
-# Create courses
+
+# =============== ORIGINAL COURSES ===============
+# Create original courses
 comp_sci_110 = Course.create!(
   course_number: 'COMP_SCI 110',
   name: 'Intro to Computer Programming',
@@ -175,176 +235,203 @@ comp_sci_330 = Course.create!(
   description: 'Introduction to human-computer interaction and the design of systems that work for people and their organizations. The goal is to understand the manner in which humans interact with, and use, their computers for productive work. The course focus is on the interface as designed artifact. The interface is a design problem without a single "correct" solution but which has many "good" solutions and a plethora of "bad" solutions.'
 )
 
-# Set up prerequisites
+# =============== ADDITIONAL COURSES ===============
+# Create 40 more courses with realistic CS course titles and descriptions using Faker
+additional_courses = []
+
+# Course topic components for generating realistic course names
+course_topics = [
+  ['Advanced', 'Introduction to', 'Foundations of', 'Topics in', 'Seminar in', 'Principles of', 'Studies in'],
+  ['Artificial Intelligence', 'Machine Learning', 'Computer Vision', 'Natural Language Processing', 
+   'Robotics', 'Data Science', 'Algorithms', 'Systems Programming', 'Database Systems', 
+   'Computer Networks', 'Operating Systems', 'Computer Security', 'Software Engineering',
+   'Web Development', 'Mobile Computing', 'Game Development', 'Computer Graphics',
+   'Human-Computer Interaction', 'Distributed Systems', 'Parallel Computing',
+   'Cloud Computing', 'Blockchain', 'Quantum Computing', 'Compilers', 'Programming Languages']
+]
+
+# CS course descriptions templates
+course_description_templates = [
+  "This course explores %s. Students will learn about %s, %s, and %s. The course includes practical assignments where students apply theoretical concepts to real-world problems.",
+  "An introduction to the principles of %s, focusing on %s and %s. Students will implement various algorithms and techniques including %s and %s.",
+  "This course provides a comprehensive overview of %s. Topics include %s, %s, and %s. Students will complete a significant project demonstrating mastery of key concepts.",
+  "Advanced topics in %s with emphasis on %s. The course covers theoretical foundations including %s as well as practical applications such as %s and %s.",
+  "A hands-on course focused on %s. Students will gain experience with %s and %s while working on team-based projects involving %s.",
+  "This course examines the intersection of %s and %s. Topics include %s, %s, and emerging research in %s. Students will analyze and implement current techniques in the field."
+]
+
+# Generate topic components for descriptions
+ai_topics = ['neural networks', 'deep learning', 'reinforcement learning', 'computer vision', 'natural language processing', 'knowledge representation', 'expert systems', 'machine perception']
+systems_topics = ['operating system design', 'distributed computing', 'concurrency', 'virtualization', 'memory management', 'file systems', 'networking protocols', 'system security']
+programming_topics = ['algorithm analysis', 'data structures', 'software design patterns', 'language semantics', 'type systems', 'compilers', 'interpreters', 'runtime systems']
+security_topics = ['cryptography', 'authentication', 'access control', 'network security', 'penetration testing', 'secure coding', 'threat modeling', 'security protocols']
+data_topics = ['database design', 'query optimization', 'big data processing', 'data mining', 'data warehousing', 'NoSQL systems', 'data analytics', 'information retrieval']
+general_topics = ai_topics + systems_topics + programming_topics + security_topics + data_topics
+
+# Create 40 additional courses
+# Extract existing course numbers from original courses
+existing_course_numbers = Course.all.pluck(:course_number).map { |cn| cn.split(' ').last.to_i }
+
+# Filter out existing course numbers from the available range
+available_numbers = (301..499).to_a - existing_course_numbers
+
+# Sample 40 unique numbers from remaining available numbers
+course_numbers = available_numbers.sample(40)
+course_numbers.sort!
+
+40.times do |i|
+  # Generate course number and name
+  course_number = course_numbers[i]
+  prefix = course_topics[0].sample
+  main_topic = course_topics[1].sample
+  course_name = "#{prefix} #{main_topic}"
+  
+  # Generate course description using templates
+  template = course_description_templates.sample
+  main_subject = main_topic.downcase
+  subtopics = general_topics.sample(4)
+  description = format(template, main_subject, *subtopics)
+  
+  # Create the course
+  course = Course.create!(
+    course_number: "COMP_SCI #{course_number}",
+    name: course_name,
+    description: description
+  )
+  
+  additional_courses << course
+end
+
+# =============== ASSIGN INSTRUCTORS, LABELS, AND QUARTERS TO COURSES ===============
+puts "Assigning instructors, labels, and quarters to courses..."
+
+# Get all courses
+all_courses = Course.all.to_a
+
+# For the original courses, specifically assign relevant labels and instructors
+comp_sci_110.labels << [label_instances[:introductory], label_instances[:python], label_instances[:for_non_cs_majors]]
+comp_sci_110.instructors << instructor_instances[:connor_bain] if instructor_instances[:connor_bain]
+comp_sci_110.instructors << instructor_instances[:sara_owsley_sood] if instructor_instances[:sara_owsley_sood]
+comp_sci_110.quarters << [quarter_instances[:fall], quarter_instances[:winter], quarter_instances[:spring]]
+
+comp_sci_111.labels << [label_instances[:introductory], label_instances[:programming], label_instances[:racket], label_instances[:required]]
+comp_sci_111.instructors << instructor_instances[:robby_findler] if instructor_instances[:robby_findler]
+comp_sci_111.instructors << instructor_instances[:christos_dimoulas] if instructor_instances[:christos_dimoulas]
+comp_sci_111.quarters << [quarter_instances[:fall], quarter_instances[:winter], quarter_instances[:spring]]
+
+comp_sci_150.labels << [label_instances[:introductory], label_instances[:programming], label_instances[:python], label_instances[:object_oriented]]
+comp_sci_150.instructors << instructor_instances[:connor_bain] if instructor_instances[:connor_bain]
+comp_sci_150.instructors << instructor_instances[:ian_horswill] if instructor_instances[:ian_horswill]
+comp_sci_150.quarters << [quarter_instances[:winter], quarter_instances[:spring]]
+
+comp_sci_211.labels << [label_instances[:programming], label_instances[:c], label_instances[:c_plus_plus], label_instances[:required], label_instances[:core]]
+comp_sci_211.instructors << instructor_instances[:branden_ghena] if instructor_instances[:branden_ghena]
+comp_sci_211.instructors << instructor_instances[:sara_owsley_sood] if instructor_instances[:sara_owsley_sood]
+comp_sci_211.quarters << [quarter_instances[:fall], quarter_instances[:winter], quarter_instances[:spring]]
+
+comp_sci_212.labels << [label_instances[:math_heavy], label_instances[:required], label_instances[:core]]
+comp_sci_212.instructors << instructor_instances[:miklos_racz] if instructor_instances[:miklos_racz]
+comp_sci_212.instructors << instructor_instances[:aravindan_vijayaraghavan] if instructor_instances[:aravindan_vijayaraghavan]
+comp_sci_212.quarters << [quarter_instances[:fall], quarter_instances[:winter], quarter_instances[:spring]]
+
+comp_sci_213.labels << [label_instances[:c], label_instances[:systems], label_instances[:required], label_instances[:core]]
+comp_sci_213.instructors << instructor_instances[:peter_dinda] if instructor_instances[:peter_dinda]
+comp_sci_213.instructors << instructor_instances[:nikos_hardavellas] if instructor_instances[:nikos_hardavellas]
+comp_sci_213.quarters << [quarter_instances[:fall], quarter_instances[:spring]]
+
+comp_sci_214.labels << [label_instances[:programming], label_instances[:data_structures], label_instances[:algorithms], label_instances[:required], label_instances[:core]]
+comp_sci_214.instructors << instructor_instances[:vincent_st_amour] if instructor_instances[:vincent_st_amour] 
+comp_sci_214.instructors << instructor_instances[:joe_hummel] if instructor_instances[:joe_hummel]
+comp_sci_214.quarters << [quarter_instances[:fall], quarter_instances[:winter], quarter_instances[:spring]]
+
+comp_sci_303.labels << [label_instances[:full_stack], label_instances[:web_development], label_instances[:project_based]]
+comp_sci_303.instructors << instructor_instances[:joe_hummel] if instructor_instances[:joe_hummel]
+comp_sci_303.quarters << [quarter_instances[:fall], quarter_instances[:spring]]
+
+comp_sci_308.labels << [label_instances[:security], label_instances[:cybersecurity]]
+comp_sci_308.instructors << instructor_instances[:sruti_bhagavatula] if instructor_instances[:sruti_bhagavatula]
+comp_sci_308.quarters << [quarter_instances[:winter]]
+
+comp_sci_310.labels << [label_instances[:systems], label_instances[:scalability], label_instances[:cloud]]
+comp_sci_310.instructors << instructor_instances[:aleksandar_kuzmanovic] if instructor_instances[:aleksandar_kuzmanovic]
+comp_sci_310.quarters << [quarter_instances[:fall]]
+
+comp_sci_321.labels << [label_instances[:programming_languages], label_instances[:racket]]
+comp_sci_321.instructors << instructor_instances[:robby_findler] if instructor_instances[:robby_findler]
+comp_sci_321.instructors << instructor_instances[:christos_dimoulas] if instructor_instances[:christos_dimoulas]
+comp_sci_321.quarters << [quarter_instances[:winter]]
+
+comp_sci_329.labels << [label_instances[:hci], label_instances[:ui], label_instances[:ux], label_instances[:studio_based]]
+comp_sci_329.instructors << instructor_instances[:haoqi_zhang] if instructor_instances[:haoqi_zhang]
+comp_sci_329.instructors << instructor_instances[:michael_horn] if instructor_instances[:michael_horn]
+comp_sci_329.quarters << [quarter_instances[:spring]]
+
+comp_sci_330.labels << [label_instances[:hci], label_instances[:ui], label_instances[:ux]]
+comp_sci_330.instructors << instructor_instances[:maia_jacobs] if instructor_instances[:maia_jacobs]
+comp_sci_330.instructors << instructor_instances[:matthew_kay] if instructor_instances[:matthew_kay]
+comp_sci_330.quarters << [quarter_instances[:fall], quarter_instances[:winter]]
+
+# For additional courses, assign random instructors, labels, and quarters
+additional_courses.each do |course|
+  # Assign 1-3 random instructors from available instructors
+  valid_instructors = instructor_instances.values.compact
+  course.instructors << valid_instructors.sample(rand(1..3))
+  
+  # Assign 2-5 random labels
+  course.labels << label_instances.values.sample(rand(2..5))
+  
+  # Assign 1-4 random quarters
+  course.quarters << quarter_instances.values.sample(rand(1..4))
+end
+
+puts "Assigned instructors, labels, and quarters to all courses"
+
+# =============== SET UP PREREQUISITES ===============
+# Original prerequisites
 comp_sci_150.prerequisites << comp_sci_111
 comp_sci_211.prerequisites << comp_sci_111
 comp_sci_211.prerequisites << comp_sci_150
 comp_sci_212.prerequisites << comp_sci_110
 comp_sci_212.prerequisites << comp_sci_111
 comp_sci_213.prerequisites << comp_sci_211
-
-# Set up instructor associations
-comp_sci_110.instructors << instructor_instances[:michael_horn]
-comp_sci_110.instructors << instructor_instances[:connor_bain]
-comp_sci_110.instructors << instructor_instances[:aleksandar_kuzmanovic]
-comp_sci_110.instructors << instructor_instances[:michalis_mamakos]
-comp_sci_110.instructors << instructor_instances[:jack_tumblin]
-
-comp_sci_111.instructors << instructor_instances[:connor_bain]
-comp_sci_111.instructors << instructor_instances[:sara_owsley_sood]
-comp_sci_111.instructors << instructor_instances[:ian_horswill]
-
-comp_sci_150.instructors << instructor_instances[:anastasia_kurdia]
-comp_sci_150.instructors << instructor_instances[:dietrich_geisler]
-comp_sci_150.instructors << instructor_instances[:sara_owsley_sood]
-
-comp_sci_211.instructors << instructor_instances[:branden_ghena]
-comp_sci_211.instructors << instructor_instances[:joe_hummel]
-comp_sci_211.instructors << instructor_instances[:sara_owsley_sood]
-
-comp_sci_212.instructors << instructor_instances[:aravindan_vijayaraghavan]
-comp_sci_212.instructors << instructor_instances[:miklos_racz]
-comp_sci_212.instructors << instructor_instances[:anjali_agarwal]
-
-comp_sci_213.instructors << instructor_instances[:peter_dinda]
-comp_sci_213.instructors << instructor_instances[:branden_ghena]
-comp_sci_213.instructors << instructor_instances[:nikos_hardavellas]
-
 comp_sci_214.prerequisites << comp_sci_111
 comp_sci_214.prerequisites << comp_sci_211
-
 comp_sci_303.prerequisites << comp_sci_213
 comp_sci_303.prerequisites << comp_sci_214
-
 comp_sci_308.prerequisites << comp_sci_211
 comp_sci_308.prerequisites << comp_sci_214
-
 comp_sci_310.prerequisites << comp_sci_213
 comp_sci_310.prerequisites << comp_sci_214
-
 comp_sci_321.prerequisites << comp_sci_111
 comp_sci_321.prerequisites << comp_sci_211
 comp_sci_321.prerequisites << comp_sci_214
-
 comp_sci_329.prerequisites << comp_sci_214
-
 comp_sci_330.prerequisites << comp_sci_214
 
-# Set up quarter offerings
-comp_sci_110.quarters << quarter_instances[:fall]
-comp_sci_110.quarters << quarter_instances[:winter]
-comp_sci_110.quarters << quarter_instances[:spring]
-comp_sci_110.quarters << quarter_instances[:summer]
+# Randomly assign prerequisites to additional courses
+basic_courses = [comp_sci_111, comp_sci_211, comp_sci_212, comp_sci_213, comp_sci_214]
+all_courses = [comp_sci_110, comp_sci_111, comp_sci_150, comp_sci_211, comp_sci_212, comp_sci_213, comp_sci_214, 
+              comp_sci_303, comp_sci_308, comp_sci_310, comp_sci_321, comp_sci_329, comp_sci_330]
 
-comp_sci_111.quarters << quarter_instances[:fall]
-comp_sci_111.quarters << quarter_instances[:winter]
-comp_sci_111.quarters << quarter_instances[:spring]
-
-comp_sci_150.quarters << quarter_instances[:fall]
-comp_sci_150.quarters << quarter_instances[:winter]
-comp_sci_150.quarters << quarter_instances[:spring]
-
-comp_sci_211.quarters << quarter_instances[:fall]
-comp_sci_211.quarters << quarter_instances[:winter]
-comp_sci_211.quarters << quarter_instances[:spring]
-
-comp_sci_212.quarters << quarter_instances[:fall]
-comp_sci_212.quarters << quarter_instances[:winter]
-
-comp_sci_213.quarters << quarter_instances[:fall]
-comp_sci_213.quarters << quarter_instances[:winter]
-comp_sci_213.quarters << quarter_instances[:spring]
-
-comp_sci_214.quarters << quarter_instances[:fall]
-comp_sci_214.quarters << quarter_instances[:winter]
-comp_sci_214.quarters << quarter_instances[:spring]
-
-comp_sci_303.quarters << quarter_instances[:fall]
-comp_sci_303.quarters << quarter_instances[:spring]
-
-comp_sci_308.quarters << quarter_instances[:winter]
-
-comp_sci_310.quarters << quarter_instances[:fall]
-
-comp_sci_321.quarters << quarter_instances[:fall]
-comp_sci_321.quarters << quarter_instances[:spring]
-
-comp_sci_329.quarters << quarter_instances[:winter]
-comp_sci_329.quarters << quarter_instances[:spring]
-
-comp_sci_330.quarters << quarter_instances[:fall]
-comp_sci_330.quarters << quarter_instances[:summer]
-
-# Set up labels
-comp_sci_110.labels << label_instances[:introductory]
-comp_sci_110.labels << label_instances[:for_non_cs_majors]
-
-comp_sci_111.labels << label_instances[:core]
-comp_sci_111.labels << label_instances[:required]
-comp_sci_111.labels << label_instances[:introductory] 
-comp_sci_111.labels << label_instances[:racket]
-
-comp_sci_150.labels << label_instances[:introductory]
-comp_sci_150.labels << label_instances[:python]
-comp_sci_150.labels << label_instances[:object_oriented]
-
-comp_sci_211.labels << label_instances[:core]
-comp_sci_211.labels << label_instances[:required]
-comp_sci_211.labels << label_instances[:programming]
-comp_sci_211.labels << label_instances[:c]
-comp_sci_211.labels << label_instances[:c_plus_plus]
-comp_sci_211.labels << label_instances[:projects_heavy]
-comp_sci_211.labels << label_instances[:time_consuming]
-comp_sci_211.labels << label_instances[:great_course_staff]
-
-comp_sci_212.labels << label_instances[:core]
-comp_sci_212.labels << label_instances[:required]
-comp_sci_212.labels << label_instances[:math_heavy]
-comp_sci_212.labels << label_instances[:programming]
-
-comp_sci_213.labels << label_instances[:core]
-comp_sci_213.labels << label_instances[:required]
-comp_sci_213.labels << label_instances[:systems]
-comp_sci_213.labels << label_instances[:projects_heavy]
-
-comp_sci_214.labels << label_instances[:core]
-comp_sci_214.labels << label_instances[:required]
-comp_sci_214.labels << label_instances[:data_structures]
-comp_sci_214.labels << label_instances[:algorithms]
-comp_sci_214.labels << label_instances[:programming]
-
-comp_sci_303.labels << label_instances[:full_stack]
-comp_sci_303.labels << label_instances[:web_development]
-comp_sci_303.labels << label_instances[:programming]
-comp_sci_303.labels << label_instances[:project_based]
-
-comp_sci_308.labels << label_instances[:security]
-comp_sci_308.labels << label_instances[:cybersecurity]
-comp_sci_308.labels << label_instances[:programming]
-
-comp_sci_310.labels << label_instances[:scalability]
-comp_sci_310.labels << label_instances[:cloud]
-comp_sci_310.labels << label_instances[:systems]
-comp_sci_310.labels << label_instances[:project_based]
-
-comp_sci_321.labels << label_instances[:programming_languages]
-comp_sci_321.labels << label_instances[:programming]
-
-comp_sci_329.labels << label_instances[:hci]
-comp_sci_329.labels << label_instances[:ui]
-comp_sci_329.labels << label_instances[:ux]
-comp_sci_329.labels << label_instances[:studio_based]
-comp_sci_329.labels << label_instances[:project_based]
-
-comp_sci_330.labels << label_instances[:hci]
-comp_sci_330.labels << label_instances[:ui]
-comp_sci_330.labels << label_instances[:ux]
-comp_sci_330.labels << label_instances[:project_based]
-
-
-user1 = User.create!(name: "Alice", email: "alice@test.com", password_digest: "password")
-user1.courses << comp_sci_330
-user1.courses<<comp_sci_329
-
-
-puts "Seed data created successfully!"
+additional_courses.each do |course|
+  # Skip some courses to have courses without prerequisites (about 20%)
+  next if Faker::Boolean.boolean(true_ratio: 0.2)
+  
+  # Determine number of prerequisites (1-3)
+  num_prereqs = rand(1..3)
+  
+  # For 300-level courses, use basic courses as prerequisites
+  if course.course_number.include?('3')
+    prereq_pool = basic_courses
+  else
+    # For 400-level courses, can use any course as prerequisite except itself and ensuring no circular dependencies
+    # (assuming course numbers reflect dependency hierarchy)
+    prereq_pool = all_courses + additional_courses.select { |c| c.course_number.split(' ').last.to_i < course.course_number.split(' ').last.to_i }
+    prereq_pool.delete(course) # Remove self
+  end
+  
+  # Assign random prerequisites
+  prereq_pool.sample(num_prereqs).each do |prereq|
+    course.prerequisites << prereq unless course.prerequisites.include?(prereq)
+  end
+end
