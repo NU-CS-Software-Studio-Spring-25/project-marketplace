@@ -2,6 +2,8 @@
 
 # NU Computer Science Courses Marketplace
 
+[Visit the App](https://nu-cs-course-marketplace-a7681a168efe.herokuapp.com/)
+
 A Tinder-like application that helps computer science students discover and save courses by swiping right on classes that match their preferences or left to skip, using a personalized recommendation algorithm powered by comprehensive course data.
 
 MVP Functions:
