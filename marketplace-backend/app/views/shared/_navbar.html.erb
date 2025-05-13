@@ -7,14 +7,14 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link <%= current_page?(courses_path) ? 'active' : '' %>" href="<%= courses_path %>">Courses</a>
+          <a class="nav-link <%= current_page?(courses_path) ? 'active' : '' %>" href="<%= courses_path %>">All Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <%= current_page?(swipes_path) ? 'active' : '' %>" href="<%= swipes_path %>">Swipe</a>
+          <a class="nav-link <%= current_page?(swipes_path) ? 'active' : '' %>" href="<%= swipes_path %>">Course Feed</a>
         </li>
         <% if current_user %>
           <li class="nav-item">
-            <a class="nav-link <%= current_page?(saved_classes_path) ? 'active' : '' %>" href="<%= saved_classes_path %>">Saved Classes</a>
+            <a class="nav-link <%= current_page?(saved_classes_path) ? 'active' : '' %>" href="<%= saved_classes_path %>">Saved Courses</a>
           </li>
         <% end %>
       </ul>
