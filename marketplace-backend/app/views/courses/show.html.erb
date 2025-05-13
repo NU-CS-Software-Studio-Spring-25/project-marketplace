@@ -4,7 +4,7 @@
       <h2><%= @course.course_number %> - <%= @course.name %></h2>
       <div>
         <%= link_to "Edit", edit_course_path(@course), class: "btn btn-outline-secondary" %>
-        <%= link_to "Back", courses_path, class: "btn btn-outline-primary" %>
+        <%= link_to "Back", "javascript:history.back()", class: "btn btn-outline-primary" %>
       </div>
     </div>
     

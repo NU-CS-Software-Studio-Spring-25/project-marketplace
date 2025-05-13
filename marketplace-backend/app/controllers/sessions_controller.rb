@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :redirect_if_authenticated, only: [:new]
+  
   def new
   end
 
@@ -9,7 +11,7 @@ class SessionsController < ApplicationController
     if user && user.password_digest == params[:password]
       # Store user id in session
       session[:user_id] = user.id
-      redirect_to courses_path
+      redirect_to saved_classes_path
     else
       # If authentication fails, show error message
       flash[:alert] = "invalid email or password"
