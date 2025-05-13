@@ -1,34 +1,48 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-hinge">
   <div class="container">
-    <a class="navbar-brand" href="<%= root_path %>">Course Marketplace</a>
+    <a class="navbar-brand navbar-brand-hinge" href="<%= root_path %>">
+      course-match
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link <%= current_page?(courses_path) ? 'active' : '' %>" href="<%= courses_path %>">Courses</a>
+          <a class="nav-link nav-link-hinge <%= current_page?(courses_path) ? 'active' : '' %>" href="<%= courses_path %>">
+            <i class="fa-solid fa-book"></i> Browse
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <%= current_page?(swipes_path) ? 'active' : '' %>" href="<%= swipes_path %>">Swipe</a>
+          <a class="nav-link nav-link-hinge <%= current_page?(swipes_path) ? 'active' : '' %>" href="<%= swipes_path %>">
+            <i class="fa-solid fa-fire"></i> Swipe
+          </a>
         </li>
         <% if current_user %>
           <li class="nav-item">
-            <a class="nav-link <%= current_page?(saved_classes_path) ? 'active' : '' %>" href="<%= saved_classes_path %>">Saved Classes</a>
+            <a class="nav-link nav-link-hinge <%= current_page?(saved_classes_path) ? 'active' : '' %>" href="<%= saved_classes_path %>">
+              <i class="fa-solid fa-heart"></i> Matches
+            </a>
           </li>
         <% end %>
       </ul>
       <ul class="navbar-nav">
         <% if current_user %>
-          <li class="nav-item">
-            <span class="nav-link text-light">Welcome, <%= current_user.email %></span>
+          <li class="nav-item me-3">
+            <span class="nav-link nav-link-hinge">
+              <i class="fa-solid fa-user"></i> <%= current_user.email %>
+            </span>
           </li>
           <li class="nav-item">
-            <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-outline-light my-2 my-sm-0" %>
+            <%= button_to logout_path, method: :delete, class: "btn-hinge-outline" do %>
+              <i class="fa-solid fa-sign-out-alt"></i> Logout
+            <% end %>
           </li>
         <% else %>
           <li class="nav-item">
-            <a class="nav-link <%= current_page?(login_path) ? 'active' : '' %>" href="<%= login_path %>">Login</a>
+            <a class="btn-hinge-primary <%= current_page?(login_path) ? 'active' : '' %>" href="<%= login_path %>">
+              <i class="fa-solid fa-sign-in-alt"></i> Login
+            </a>
           </li>
         <% end %>
       </ul>

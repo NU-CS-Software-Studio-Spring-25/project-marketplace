@@ -1,33 +1,74 @@
-<div class="border d-flex justify-content-center align-items-center vh-100 bg-light">
-    <div class="card p-4 d-flex" style="width: 35rem; height: 30rem;">
-        <h1 class="title-course text-center mt-3">welcome to<br>course marketplace</h1>
-        <h2 class="title-course text-center fs-3">sign in</h2>
-        <% if flash[:alert] %>
-            <div class="alert alert-danger py-2 small" role="alert"><%= flash[:alert] %></div>
-        <% end %>
-        <div class="d-flex justify-content-center"> 
-            <%= form_with url: login_path, method: :post, local: true, class:"needs_validation w-100" do |f| %>
-                <div class="mt-3 mb-3">
-                    <%= f.label :email, class: "form-label" %>
-                    <%= f.email_field :email, class: "form-control", required: true %>
-                </div>
-                <div class="mb-3">
-                    <%= f.label :password, class: "form-label" %>
-                    <div class="input-group">
-                        <%= f.password_field :password, class: "form-control", required: true, id: "password-input" %>
-                        <button type="button" class="btn btn-dark" id="toggle-password">
-                            Show
-                        </button>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center align-items-center gap-2 mt-3">
-                    <%= f.submit "Login", class: "btn btn-dark" %>
-                    <span>or</span>
-                    <a href="/auth/google_oauth2" class="btn btn-dark">
-                        <i class="bi bi-google"></i> Sign in with Google
-                    </a>
-              </div>
-            <% end %>
-        </div>
+<div class="login-container">
+  <div class="login-card">
+    <div class="text-center mb-4">
+      <i class="fa-solid fa-heart-pulse fa-3x" style="color: var(--hinge-primary);"></i>
     </div>
+    <h1 class="login-title">course-match</h1>
+    <h2 class="login-subtitle">Find your perfect academic match</h2>
+    
+    <% if flash[:alert] %>
+      <div class="alert alert-danger py-2" role="alert">
+        <i class="fa-solid fa-circle-exclamation me-2"></i>
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+    
+    <%= form_with url: login_path, method: :post, local: true, class: "needs_validation mt-4" do |f| %>
+      <div class="mb-4">
+        <%= f.label :email, class: "form-label fw-bold" %>
+        <div class="input-group">
+          <span class="input-group-text bg-white">
+            <i class="fa-solid fa-envelope text-muted"></i>
+          </span>
+          <%= f.email_field :email, class: "form-control border-start-0", placeholder: "your@email.com", required: true %>
+        </div>
+      </div>
+      
+      <div class="mb-4">
+        <%= f.label :password, class: "form-label fw-bold" %>
+        <div class="input-group">
+          <span class="input-group-text bg-white">
+            <i class="fa-solid fa-lock text-muted"></i>
+          </span>
+          <%= f.password_field :password, class: "form-control border-start-0", placeholder: "Your password", required: true, id: "password-input" %>
+          <button type="button" class="btn btn-outline-secondary" id="toggle-password">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="d-grid gap-2 mt-4 mb-3">
+        <%= f.submit "Log in", class: "btn-hinge-primary py-2 fw-bold" %>
+      </div>
+      
+      <div class="position-relative text-center my-4">
+        <hr>
+        <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted">or</span>
+      </div>
+      
+      <div class="d-grid gap-2">
+        <a href="/auth/google_oauth2" class="btn btn-outline-dark">
+          <i class="fa-brands fa-google me-2"></i> Sign in with Google
+        </a>
+      </div>
+    <% end %>
+  </div>
 </div>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    const toggleButton = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password-input');
+    
+    if (toggleButton && passwordInput) {
+      toggleButton.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        // Toggle eye icon
+        const iconClass = type === 'password' ? 'fa-eye' : 'fa-eye-slash';
+        toggleButton.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+      });
+    }
+  });
+</script>

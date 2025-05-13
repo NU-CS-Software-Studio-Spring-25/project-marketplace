@@ -1,50 +1,63 @@
 <div class="container mt-4">
-  <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h2><%= @course.course_number %> - <%= @course.name %></h2>
-      <div>
-        <%= link_to "Edit", edit_course_path(@course), class: "btn btn-outline-secondary" %>
-        <%= link_to "Back", "javascript:history.back()", class: "btn btn-outline-primary" %>
+  <div class="card card-hinge">
+    <div class="card-header-hinge">
+      <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+          <span class="course-number-badge"><%= @course.course_number %></span>
+          <h2 class="course-title"><%= @course.name %></h2>
+        </div>
+        
+        <div>
+          <%= link_to edit_course_path(@course), class: "btn-hinge-outline me-2" do %>
+            <i class="fa-solid fa-pen-to-square me-1"></i> Edit
+          <% end %>
+          
+          <%= link_to "javascript:history.back()", class: "btn btn-outline-secondary" do %>
+            <i class="fa-solid fa-arrow-left me-1"></i> Back
+          <% end %>
+        </div>
       </div>
+      
+      <% if @course.labels.any? %>
+        <div class="mb-3">
+          <% @course.labels.each do |label| %>
+            <span class="badge-hinge"><%= label.display_name %></span>
+          <% end %>
+        </div>
+      <% end %>
     </div>
     
-    <div class="card-body">
+    <div class="card-body-hinge">
       <div class="mb-4">
-        <h5>Description</h5>
-        <p class="card-text"><%= @course.description %></p>
+        <h5 class="section-header">About this course</h5>
+        <p class="card-text mt-3" style="line-height: 1.6;"><%= @course.description %></p>
       </div>
 
       <% if @course.instructors.any? %>
         <div class="mb-4">
-          <h5>Instructors</h5>
-          <ul class="list-group">
+          <h5 class="section-header">Instructors</h5>
+          <div class="mt-3">
             <% @course.instructors.each do |instructor| %>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <%= instructor.name %>
-                <span class="text-muted"><%= instructor.email %></span>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <% if @course.quarters.any? %>
-        <div class="mb-4">
-          <h5>Offered in</h5>
-          <div>
-            <% @course.quarters.each do |quarter| %>
-              <span class="badge bg-secondary me-1"><%= quarter.name %></span>
+              <div class="instructor-item">
+                <div>
+                  <p class="instructor-name"><%= instructor.name %></p>
+                  <p class="instructor-email"><%= instructor.email %></p>
+                </div>
+              </div>
             <% end %>
           </div>
         </div>
       <% end %>
 
-      <% if @course.labels.any? %>
+      <% if @course.quarters.any? %>
         <div class="mb-4">
-          <h5>Labels</h5>
-          <div>
-            <% @course.labels.each do |label| %>
-              <span class="badge bg-info text-dark me-1"><%= label.display_name %></span>
+          <h5 class="section-header">Available in</h5>
+          <div class="mt-3">
+            <% @course.quarters.each do |quarter| %>
+              <span class="badge-hinge">
+                <i class="fa-regular fa-calendar me-1"></i>
+                <%= quarter.name %>
+              </span>
             <% end %>
           </div>
         </div>
@@ -52,16 +65,23 @@
 
       <% if @course.prerequisites.any? %>
         <div class="mb-4">
-          <h5>Prerequisites</h5>
-          <ul class="list-group">
+          <h5 class="section-header">Prerequisites</h5>
+          <div class="mt-3">
             <% @course.prerequisites.each do |prerequisite| %>
-              <li class="list-group-item">
-                <%= link_to "#{prerequisite.course_number} - #{prerequisite.name}", prerequisite %>
-              </li>
+              <div class="badge-hinge mb-2">
+                <i class="fa-solid fa-graduation-cap me-1"></i>
+                <%= link_to "#{prerequisite.course_number} - #{prerequisite.name}", prerequisite, style: "text-decoration: none; color: inherit;" %>
+              </div>
             <% end %>
-          </ul>
+          </div>
         </div>
       <% end %>
+      
+      <div class="d-flex justify-content-center mt-5">
+        <%= button_to enrollments_path(course_id: @course.id), method: :post, class: "btn-hinge-primary" do %>
+          <i class="fa-solid fa-heart me-2"></i> Save to My Matches
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

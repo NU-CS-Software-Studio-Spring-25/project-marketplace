@@ -1,39 +1,53 @@
-<% content_for :title, "Saved Classes" %>
+<% content_for :title, "Your Matches - course-match" %>
 
 <div class="container mt-4">
-  <h1 class="mb-4">My Saved Classes</h1>
-  
-  <% if flash[:notice] %>
-    <div class="alert alert-success">
-      <%= flash[:notice] %>
-    </div>
-  <% end %>
+  <h1 class="text-center mb-5" style="color: var(--hinge-primary); font-weight: 700;">@your-matches</h1>
   
   <% if @enrollments.nil? || @enrollments.empty? %>
-    <div class="alert alert-info">
-      You haven't saved any classes yet. <a href="<%= courses_path %>">Browse courses</a> to add some.
+    <div class="no-more-courses">
+      <h3>No matches yet</h3>
+      <p>Start swiping to find your perfect academic matches!</p>
+      <a href="<%= swipes_path %>" class="btn-hinge-primary mt-3">
+        <i class="fa-solid fa-fire me-2"></i> Start Swiping
+      </a>
     </div>
   <% else %>
-    <div class="row">
+    <div class="row g-3">
       <% @enrollments.each do |enrollment| %>
         <% if enrollment.course.present? %>
-          <div class="col-md-6 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <%= enrollment.course.course_number.presence || "No Course Number" %> - 
+          <div class="mb-3">
+            <div class="card card-hinge h-100">
+              <div class="card-header-hinge">
+                <span class="course-number-badge">
+                  <%= enrollment.course.course_number.presence || "No Course Number" %>
+                </span>
+                <h3 class="course-title">
                   <%= enrollment.course.name.presence || "No Name" %>
-                </h5>
-                <p class="card-text">
-                  <% if enrollment.course.description.present? %>
-                    <strong>Description:</strong> <%= enrollment.course.description.truncate(150) %>
+                </h3>
+                
+                <div class="small text-muted">
+                  <i class="fa-regular fa-clock me-1"></i> Matched on <%= enrollment.created_at.strftime("%b %d, %Y") %>
+                </div>
+              </div>
+              
+              <div class="card-body-hinge">
+                <% if enrollment.course.description.present? %>
+                  <div class="mb-4">
+                    <h5 class="section-header">About</h5>
+                    <p class="mb-0"><%= enrollment.course.description.truncate(150) %></p>
+                  </div>
+                <% end %>
+                
+                <div class="d-flex mt-4 justify-content-between">
+                  <%= link_to course_path(enrollment.course), class: "btn-hinge-outline" do %>
+                    <i class="fa-solid fa-circle-info me-1"></i> Details
                   <% end %>
-                </p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <%= link_to "View Details", course_path(enrollment.course), class: "btn btn-primary" %>
-                  <%= button_to "Remove", enrollment_path(enrollment), method: :delete, 
-                      data: { turbo_confirm: "Are you sure you want to remove this course from your saved classes?" }, 
-                      class: "btn btn-danger" %>
+                  
+                  <%= button_to enrollment_path(enrollment), method: :delete, 
+                    data: { turbo_confirm: "Are you sure you want to unmatch with this course?" }, 
+                    class: "btn-hinge-primary" do %>
+                    <i class="fa-solid fa-heart-crack me-1"></i> Unmatch
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -41,9 +55,11 @@
         <% end %>
       <% end %>
     </div>
+    
+    <div class="text-center mt-5">
+      <a href="<%= swipes_path %>" class="btn-hinge-primary">
+        <i class="fa-solid fa-fire me-2"></i> Find More Matches
+      </a>
+    </div>
   <% end %>
-  
-  <div class="mt-4">
-    <%= link_to "Back to Courses", courses_path, class: "btn btn-secondary" %>
-  </div>
 </div> 
