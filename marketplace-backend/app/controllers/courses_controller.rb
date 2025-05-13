@@ -144,6 +144,13 @@ class CoursesController < ApplicationController
     })
   end
 
+  # GET /swipes
+  def swipes
+    saved_ids = current_user.enrollments.pluck(:course_id)
+    @courses = Course.where.not(id: saved_ids)
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course

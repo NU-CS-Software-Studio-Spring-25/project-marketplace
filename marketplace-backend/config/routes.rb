@@ -35,6 +35,10 @@ Rails.application.routes.draw do
   # Saved classes (enrollments)
   get 'saved_classes', to: 'enrollments#index'
   delete 'enrollments/:id', to: 'enrollments#destroy', as: :enrollment
+  post 'enrollments', to: 'enrollments#create', as: :enrollments
+
+  # Swipes
+  get 'swipes', to: 'courses#swipes', as: :swipes
 
   # Account management (optional if users can sign up)
   resources :users, only: [:new, :create]

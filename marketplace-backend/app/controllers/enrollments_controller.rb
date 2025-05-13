@@ -1,6 +1,12 @@
 class EnrollmentsController < ApplicationController
   before_action :authenticate_user
 
+  def create 
+    @course = Course.find(params[:course_id])
+    current_user.enrollments.create(course: @course)
+    redirect_to swipes_path, notice: "Class was successfully added to your saved classes."
+  end
+
   def index
     @enrollments = if current_user
       current_user.enrollments.includes(:course)
