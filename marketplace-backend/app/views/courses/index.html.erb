@@ -7,6 +7,53 @@
     <% end %>
   </div>
 
+  <div class="card card-hinge mb-4">
+    <div class="card-body-hinge">
+      <h5 class="card-title mb-3">Filter Courses</h5>
+      <%= form_with url: courses_path, method: :get, class: "row g-3", data: { controller: "filter" } do |f| %>
+        <div class="col-md-4">
+          <%= f.label :label_ids, "Labels", class: "form-label" %>
+          <%= f.collection_select :label_ids, Label.all, :id, :display_name, 
+              { include_blank: "All Labels" }, 
+              { multiple: true, class: "form-select" } %>
+        </div>
+        
+        <div class="col-md-4">
+          <%= f.label :quarter_ids, "Quarters", class: "form-label" %>
+          <%= f.collection_select :quarter_ids, Quarter.all, :id, :name, 
+              { include_blank: "All Quarters" }, 
+              { multiple: true, class: "form-select" } %>
+        </div>
+        
+        <div class="col-md-4">
+          <%= f.label :instructor_ids, "Instructors", class: "form-label" %>
+          <%= f.collection_select :instructor_ids, Instructor.all, :id, :name, 
+              { include_blank: "All Instructors" }, 
+              { multiple: true, class: "form-select" } %>
+        </div>
+
+        <div class="col-12 mt-3">
+          <%= f.submit "Apply Filters", class: "btn-hinge-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if params[:label_ids].present? || params[:quarter_ids].present? || params[:instructor_ids].present? %>
+    <div class="alert alert-info mb-4">
+      <h6>Active Filters:</h6>
+      <% if params[:label_ids].present? %>
+        <p>Labels: <%= Label.where(id: params[:label_ids]).pluck(:display_name).join(", ") %></p>
+      <% end %>
+      <% if params[:quarter_ids].present? %>
+        <p>Quarters: <%= Quarter.where(id: params[:quarter_ids]).pluck(:name).join(", ") %></p>
+      <% end %>
+      <% if params[:instructor_ids].present? %>
+        <p>Instructors: <%= Instructor.where(id: params[:instructor_ids]).pluck(:name).join(", ") %></p>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="row g-3">
     <% @courses.each do |course| %>
       <div class="">

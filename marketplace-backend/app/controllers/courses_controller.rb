@@ -8,6 +8,23 @@ class CoursesController < ApplicationController
   def index
     @courses = Course.all.includes(:instructors, :labels, :quarters, :prerequisites)
     
+    # Apply filters if present, ignoring blank values
+    if params[:label_ids].present?
+      label_ids = Array(params[:label_ids]).reject(&:blank?)
+      @courses = @courses.joins(:labels).where(labels: { id: label_ids }) if label_ids.any?
+    end
+    if params[:quarter_ids].present?
+      quarter_ids = Array(params[:quarter_ids]).reject(&:blank?)
+      @courses = @courses.joins(:quarters).where(quarters: { id: quarter_ids }) if quarter_ids.any?
+    end
+    if params[:instructor_ids].present?
+      instructor_ids = Array(params[:instructor_ids]).reject(&:blank?)
+      @courses = @courses.joins(:instructors).where(instructors: { id: instructor_ids }) if instructor_ids.any?
+    end
+    
+    # Ensure we get distinct results when using joins
+    @courses = @courses.distinct
+    
     respond_to do |format|
       format.html
       format.json { render json: @courses.as_json(include: {
