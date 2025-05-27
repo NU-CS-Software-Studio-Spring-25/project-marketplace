@@ -405,8 +405,8 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
-  omniauth
-  omniauth-google-oauth2
+  omniauth (~> 2.1, >= 2.1.2)
+  omniauth-google-oauth2 (~> 1.2)
   omniauth-rails_csrf_protection
   pg (~> 1.1)
   propshaft
