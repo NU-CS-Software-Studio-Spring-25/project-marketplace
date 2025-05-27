@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
   def redirect_if_authenticated
     redirect_to saved_classes_path if current_user
   end
+
+  def authenticate_user
+    redirect_to login_path, alert: "Please log in to view your saved classes." unless current_user
+  end
 end
