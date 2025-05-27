@@ -2,18 +2,16 @@ require_relative "boot"
 
 require "rails/all"
 
+# Load dotenv gems manually
+require 'dotenv'
+Dotenv.load
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module MarketplaceBackend
   class Application < Rails::Application
-
-    # Only load dotenv if it's available (required in development/test, not in production)
-    if defined?(Dotenv)
-      require 'dotenv/rails'
-      Dotenv::Railtie.load
-    end
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
@@ -21,6 +19,10 @@ module MarketplaceBackend
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
+    
+    # Configure session handling
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_myapp_session'
 
     # Configuration for the application, engines, and railties goes here.
     #
