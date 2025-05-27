@@ -12,7 +12,6 @@ Rails.application.routes.draw do
 
   # Authentication routes
   get    'login',  to: 'sessions#new'
-  # post   'login',  to: 'sessions#create'
  
 
   # Google account authentication routes
