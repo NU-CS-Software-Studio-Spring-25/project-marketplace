@@ -23,6 +23,7 @@ import os
 import re
 from pathlib import Path
 from typing import Dict, List, Set, Tuple, Optional
+from collections import defaultdict
 
 class CSCourseExtractor:
     def __init__(self, data_dir: str = "Paper Data"):
@@ -208,12 +209,14 @@ class CSCourseExtractor:
         print(f"Found {cs_course_count} CS courses in plan data")
     
     def process_quarter_files(self):
-        """Process all quarter-specific files to extract instructor data."""
+        """Process all quarter-specific files to extract instructor data and special topics courses."""
         quarter_files = [
             "2025Winter.json", "2025Spring.json", "2024Fall.json", 
             "2024Winter.json", "2024Spring.json", "2024Summer.json",
             "2025Summer.json", "2023Fall.json"
         ]
+        
+        special_topics_courses = {}  # Track special topics courses
         
         for quarter_file in quarter_files:
             if not (self.data_dir / quarter_file).exists():
@@ -230,9 +233,10 @@ class CSCourseExtractor:
             quarter_name = re.sub(r'(\d{4})([A-Z][a-z]+)', r'\1 \2', quarter_name)
             self.quarters.add(quarter_name)
             
-            print(f"Processing {quarter_file} for instructor data...")
+            print(f"Processing {quarter_file} for instructor data and special topics...")
             
             cs_courses_in_quarter = 0
+            special_topics_found = 0
             
             for course_id, course_data in quarter_data.items():
                 department = course_data.get('u', '')
@@ -246,8 +250,13 @@ class CSCourseExtractor:
                 if not course_number:
                     continue
                 
-                # Add quarter mapping
-                self.course_quarter_mappings.append((course_number, quarter_name))
+                # Check if this is a special topics course (396, 397, 496, 497)
+                base_course_num = course_number.split('-')[0]
+                is_special_topics = base_course_num in ['396', '397', '496', '497']
+                
+                # Add quarter mapping for regular courses
+                if not is_special_topics:
+                    self.course_quarter_mappings.append((course_number, quarter_name))
                 
                 # Extract instructor data from sections
                 sections = course_data.get('s', [])
@@ -255,19 +264,68 @@ class CSCourseExtractor:
                     for section in sections:
                         if not isinstance(section, dict):
                             continue
+                        
+                        section_number = section.get('s', '')
+                        section_topic = section.get('k', '')  # This is the specific topic
+                        
+                        # Handle special topics courses
+                        if is_special_topics and section_topic and section_number:
+                            special_course_number = f"{course_number}-{section_number}"
                             
-                        instructors = section.get('r', [])
-                        if isinstance(instructors, list):
-                            for instructor in instructors:
-                                if isinstance(instructor, dict):
-                                    instructor_name = instructor.get('n', '')
-                                    if instructor_name:
-                                        clean_name = self.clean_instructor_name(instructor_name)
-                                        if clean_name:
-                                            self.instructors.add(clean_name)
-                                            self.course_instructor_mappings.append((course_number, clean_name))
+                            # Create or update special topics course
+                            if special_course_number not in special_topics_courses:
+                                special_topics_courses[special_course_number] = {
+                                    'course_number': special_course_number,
+                                    'name': section_topic,
+                                    'description': f"Special topics course: {section_topic}",
+                                    'base_course': course_number
+                                }
+                                special_topics_found += 1
+                            
+                            # Add quarter mapping for special topics course
+                            self.course_quarter_mappings.append((special_course_number, quarter_name))
+                            
+                            # Process instructors for special topics course
+                            instructors = section.get('r', [])
+                            if isinstance(instructors, list):
+                                for instructor in instructors:
+                                    if isinstance(instructor, dict):
+                                        instructor_name = instructor.get('n', '')
+                                        if instructor_name:
+                                            clean_name = self.clean_instructor_name(instructor_name)
+                                            if clean_name:
+                                                self.instructors.add(clean_name)
+                                                self.course_instructor_mappings.append((special_course_number, clean_name))
+                        else:
+                            # Regular course instructor processing
+                            instructors = section.get('r', [])
+                            if isinstance(instructors, list):
+                                for instructor in instructors:
+                                    if isinstance(instructor, dict):
+                                        instructor_name = instructor.get('n', '')
+                                        if instructor_name:
+                                            clean_name = self.clean_instructor_name(instructor_name)
+                                            if clean_name:
+                                                self.instructors.add(clean_name)
+                                                self.course_instructor_mappings.append((course_number, clean_name))
             
-            print(f"Found {cs_courses_in_quarter} CS courses in {quarter_file}")
+            print(f"Found {cs_courses_in_quarter} CS courses and {special_topics_found} special topics sections in {quarter_file}")
+        
+        # Add special topics courses to the main courses dictionary
+        for special_course_number, special_course_data in special_topics_courses.items():
+            self.courses[special_course_number] = {
+                'course_number': special_course_number,
+                'name': special_course_data['name'],
+                'description': special_course_data['description']
+            }
+        
+        print(f"Total special topics courses added: {len(special_topics_courses)}")
+        if special_topics_courses:
+            print("Sample special topics courses:")
+            for i, (course_num, course_data) in enumerate(list(special_topics_courses.items())[:5]):
+                print(f"  {course_num}: {course_data['name']}")
+            if len(special_topics_courses) > 5:
+                print(f"  ... and {len(special_topics_courses) - 5} more")
     
     def write_csv_files(self):
         """Write all extracted data to CSV files."""
