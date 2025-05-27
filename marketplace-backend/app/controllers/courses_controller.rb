@@ -6,7 +6,7 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.all.includes(:instructors, :labels, :quarters, :prerequisites)
+    @courses = Course.order(:course_number).includes(:instructors, :labels, :quarters, :prerequisites).page(params[:page]).per(params[:per_page] || 12)
     
     respond_to do |format|
       format.html
