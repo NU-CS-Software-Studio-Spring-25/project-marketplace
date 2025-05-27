@@ -23,6 +23,14 @@ module MarketplaceBackend
     # Configure session handling
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_myapp_session'
+    
+    # Configure CORS for OAuth
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :options]
+      end
+    end
 
     # Configuration for the application, engines, and railties goes here.
     #

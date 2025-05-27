@@ -14,7 +14,7 @@
     <% end %>
       
     <div class="d-flex justify-content-center mt-4">
-      <%= form_tag '/auth/google_oauth2', method: :post, class: 'w-100' do %>
+      <%= form_tag '/auth/google_oauth2', method: :post, class: 'w-100', data: { turbo: false } do %>
         <div class="d-grid">
           <%= button_tag type: 'submit', class: 'btn btn-outline-dark btn-lg py-2' do %>
             <i class="fa-brands fa-google me-2"></i> Sign in with Google

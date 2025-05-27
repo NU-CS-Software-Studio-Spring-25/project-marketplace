@@ -2,6 +2,7 @@ require 'omniauth/rails_csrf_protection'
 require 'omniauth-google-oauth2'
 
 OmniAuth.config.logger = Rails.logger
+OmniAuth.config.silence_get_warning = true
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :google_oauth2, 
