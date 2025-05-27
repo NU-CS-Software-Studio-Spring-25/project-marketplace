@@ -41,7 +41,7 @@ puts "Created #{User.count} users"
 # Load quarters from CSV
 puts "Loading quarters from CSV..."
 quarter_instances = {}
-CSV.foreach(Rails.root.join('..', 'data', 'quarters.csv'), headers: true) do |row|
+CSV.foreach(Rails.root.join('data', 'quarters.csv'), headers: true) do |row|
   quarter = Quarter.create!(name: row['name'])
   quarter_instances[row['name']] = quarter
 end
@@ -50,7 +50,7 @@ puts "Created #{Quarter.count} quarters"
 # Load instructors from CSV
 puts "Loading instructors from CSV..."
 instructor_instances = {}
-CSV.foreach(Rails.root.join('..', 'data', 'instructors.csv'), headers: true) do |row|
+CSV.foreach(Rails.root.join('data', 'instructors.csv'), headers: true) do |row|
   # Generate email if not provided
   email = row['email'].present? ? row['email'] : "#{row['name'].downcase.gsub(' ', '.')}@northwestern.edu"
   
@@ -125,7 +125,7 @@ puts "Created #{Label.count} labels"
 # Load courses from CSV
 puts "Loading courses from CSV..."
 course_instances = {}
-CSV.foreach(Rails.root.join('..', 'data', 'courses.csv'), headers: true) do |row|
+CSV.foreach(Rails.root.join('data', 'courses.csv'), headers: true) do |row|
   # Convert course number format from "110-0" to "COMP_SCI 110"
   course_number = "COMP_SCI #{row['course_number']}"
   
@@ -140,7 +140,7 @@ puts "Created #{Course.count} courses"
 
 # Load course-instructor mappings
 puts "Loading course-instructor mappings..."
-CSV.foreach(Rails.root.join('..', 'data', 'course_instructor_mappings.csv'), headers: true) do |row|
+CSV.foreach(Rails.root.join('data', 'course_instructor_mappings.csv'), headers: true) do |row|
   course = course_instances[row['course_number']]
   instructor = instructor_instances[row['instructor_name']]
   
@@ -152,7 +152,7 @@ puts "Loaded course-instructor mappings"
 
 # Load course-quarter mappings
 puts "Loading course-quarter mappings..."
-CSV.foreach(Rails.root.join('..', 'data', 'course_quarter_mappings.csv'), headers: true) do |row|
+CSV.foreach(Rails.root.join('data', 'course_quarter_mappings.csv'), headers: true) do |row|
   course = course_instances[row['course_number']]
   quarter = quarter_instances[row['quarter_name']]
   
