@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # Authentication routes
   get    'login',  to: 'sessions#new'
+  get '/auth/google_oauth2', to: 'sessions#google_auth', as: :google_login
  
 
   # Google account authentication routes

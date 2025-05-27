@@ -17,8 +17,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
           }
 end
 
-# In development, allow OmniAuth to work in development without https
-OmniAuth.config.allowed_request_methods = [:post, :get] if Rails.env.development?
+# Allow both GET and POST requests for OmniAuth in all environments
+OmniAuth.config.allowed_request_methods = [:post, :get]
 
 # Add error handling
 OmniAuth.config.on_failure = Proc.new do |env|
