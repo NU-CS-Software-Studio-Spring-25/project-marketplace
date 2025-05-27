@@ -23,8 +23,8 @@
             <div class="d-flex flex-wrap gap-3">
               <% Label.all.each do |label| %>
                 <div class="form-check form-check-inline">
-                  <%= check_box_tag "label_ids[]", label.id, Array(params[:label_ids]).map(&:to_s).include?(label.id.to_s), id: "label_{label.id}", class: "form-check-input" %>
-                  <%= label_tag "label_{label.id}", label.display_name, class: "form-check-label" %>
+                  <%= check_box_tag "label_ids[]", label.id, Array(params[:label_ids]).map(&:to_s).include?(label.id.to_s), id: "label_#{label.id}", class: "form-check-input" %>
+                  <%= label_tag "label_#{label.id}", label.display_name, class: "form-check-label" %>
                 </div>
               <% end %>
             </div>
@@ -34,8 +34,8 @@
             <div class="d-flex flex-wrap gap-3">
               <% Quarter.all.each do |quarter| %>
                 <div class="form-check form-check-inline">
-                  <%= check_box_tag "quarter_ids[]", quarter.id, Array(params[:quarter_ids]).map(&:to_s).include?(quarter.id.to_s), id: "quarter_{quarter.id}", class: "form-check-input" %>
-                  <%= label_tag "quarter_{quarter.id}", quarter.name, class: "form-check-label" %>
+                  <%= check_box_tag "quarter_ids[]", quarter.id, Array(params[:quarter_ids]).map(&:to_s).include?(quarter.id.to_s), id: "quarter_#{quarter.id}", class: "form-check-input" %>
+                  <%= label_tag "quarter_#{quarter.id}", quarter.name, class: "form-check-label" %>
                 </div>
               <% end %>
             </div>
@@ -45,8 +45,8 @@
             <div class="d-flex flex-wrap gap-3">
               <% Instructor.all.each do |instructor| %>
                 <div class="form-check form-check-inline">
-                  <%= check_box_tag "instructor_ids[]", instructor.id, Array(params[:instructor_ids]).map(&:to_s).include?(instructor.id.to_s), id: "instructor_{instructor.id}", class: "form-check-input" %>
-                  <%= label_tag "instructor_{instructor.id}", instructor.name, class: "form-check-label" %>
+                  <%= check_box_tag "instructor_ids[]", instructor.id, Array(params[:instructor_ids]).map(&:to_s).include?(instructor.id.to_s), id: "instructor_#{instructor.id}", class: "form-check-input" %>
+                  <%= label_tag "instructor_#{instructor.id}", instructor.name, class: "form-check-label" %>
                 </div>
               <% end %>
             </div>
@@ -78,6 +78,61 @@
       <% end %>
     </div>
   <% end %>
+
+  <!-- Pagination Controls -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="text-muted">
+      <% if @courses.respond_to?(:total_count) %>
+        Showing <%= @courses.offset_value + 1 %> - <%= [@courses.offset_value + @courses.limit_value, @courses.total_count].min %> 
+        of <%= @courses.total_count %> courses
+      <% else %>
+        <%= @courses.count %> courses
+      <% end %>
+    </div>
+    
+    <!-- Per-page selector -->
+<div class="d-flex align-items-center gap-2">
+  <span class="text-muted small">Show:</span>
+  <%= link_to request.params.except(:page).merge(per_page: 12), 
+      class: "btn btn-sm per-page-btn #{params[:per_page].to_i == 12 || params[:per_page].blank? ? 'active' : 'btn-outline-secondary'}" do %>
+    12
+  <% end %>
+  <%= link_to request.params.except(:page).merge(per_page: 24), 
+      class: "btn btn-sm per-page-btn #{params[:per_page].to_i == 24 ? 'active' : 'btn-outline-secondary'}" do %>
+    24
+  <% end %>
+  <%= link_to request.params.except(:page).merge(per_page: 48), 
+      class: "btn btn-sm per-page-btn #{params[:per_page].to_i == 48 ? 'active' : 'btn-outline-secondary'}" do %>
+    48
+  <% end %>
+</div>
+
+<style>
+  /* Per-page button styling */
+  .per-page-btn {
+    transition: all 0.3s ease;
+    color: var(--hinge-primary);
+    border-color: var(--hinge-primary);
+  }
+  
+  .per-page-btn.active {
+    background-color: black !important;
+    border-color: black !important;
+    color: white !important;
+  }
+  
+  .per-page-btn:hover:not(.active) {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-color: black;
+    color: white !important;
+  }
+  
+  .per-page-btn.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+  }
+</style>
+  </div>
 
   <div class="row g-3">
     <% @courses.each do |course| %>
@@ -122,4 +177,54 @@
       </div>
     <% end %>
   </div>
+
+  <!-- No courses message -->
+  <% if @courses.empty? %>
+    <div class="text-center mt-5">
+      <div class="text-muted mb-3">
+        <i class="fa-solid fa-book fa-3x"></i>
+      </div>
+      <h3 class="text-muted">No courses found</h3>
+      <p class="text-muted">Start by adding your first course to the catalog.</p>
+    </div>
+  <% end %>
+
+  <!-- Kaminari Pagination -->
+  <% if @courses.respond_to?(:total_pages) && @courses.total_pages > 1 %>
+    <nav aria-label="Course pagination" class="mt-4">
+      <div class="d-flex justify-content-center">
+        <%= paginate @courses, 
+            theme: 'bootstrap4',
+            nav_class: 'justify-content-center',
+            params: { per_page: params[:per_page] } %>
+      </div>
+    </nav>
+  <% end %>
 </div>
+
+<style>
+/* Custom pagination styling */
+.pagination .page-link {
+  color: var(--hinge-primary);
+  border-color: var(--hinge-primary);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: black; /* Active background color */
+  border-color: var(--hinge-primary);
+  color: white !important; /* Active text color */
+}
+
+.pagination .page-link:hover {
+  background-color: black; /* Hover background color */
+  color: white; /* Hover text color */
+  border-color: var(--hinge-primary);
+}
+
+.btn-hinge-outline.active,
+.per-page-btn.active {
+  background-color: var(--hinge-primary) !important;
+  border-color: var(--hinge-primary) !important;
+  color: white !important;
+}
+</style>

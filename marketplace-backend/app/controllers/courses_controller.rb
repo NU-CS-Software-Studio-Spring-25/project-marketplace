@@ -6,7 +6,7 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.all.includes(:instructors, :labels, :quarters, :prerequisites)
+    @courses = Course.order(:course_number).includes(:instructors, :labels, :quarters, :prerequisites)
     
     # Apply filters if present, ignoring blank values
     if params[:label_ids].present?
@@ -24,6 +24,9 @@ class CoursesController < ApplicationController
     
     # Ensure we get distinct results when using joins
     @courses = @courses.distinct
+    
+    # Apply pagination after all filtering is done
+    @courses = @courses.page(params[:page]).per(params[:per_page] || 12)
     
     respond_to do |format|
       format.html
