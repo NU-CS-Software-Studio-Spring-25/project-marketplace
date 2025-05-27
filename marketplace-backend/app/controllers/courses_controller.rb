@@ -168,7 +168,10 @@ class CoursesController < ApplicationController
   # GET /swipes
   def swipes
     saved_ids = current_user.enrollments.pluck(:course_id)
-    @courses = Course.where.not(id: saved_ids).order(Arel.sql('RANDOM()'))
+    @courses = Course.where.not(id: saved_ids)
+                    .includes(:instructors, :labels, :quarters, :prerequisites)
+                    .order(Arel.sql('RANDOM()'))
+                    .limit(20) # Only load 20 courses at a time for better performance
   end
 
 

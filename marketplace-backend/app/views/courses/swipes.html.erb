@@ -91,56 +91,6 @@
   </div>
 </div>
 
-<script>
-  document.addEventListener("turbo:load", () => {
-    const cards = document.querySelectorAll(".swipe-card");
-    let currentIndex = 0;
-
-    function showNextCard() {
-      if (currentIndex < cards.length) {
-        // Add exit animation class
-        cards[currentIndex].classList.add("swipe-card-exit-active");
-        
-        setTimeout(() => {
-          cards[currentIndex].classList.add("d-none");
-          currentIndex++;
-          
-          if (currentIndex < cards.length) {
-            cards[currentIndex].classList.remove("d-none");
-            // Add entrance animation class
-            cards[currentIndex].classList.add("swipe-card-enter-active");
-            
-            // Remove animation classes after animation completes
-            setTimeout(() => {
-              cards[currentIndex].classList.remove("swipe-card-enter-active");
-            }, 300);
-          } else {
-            document.getElementById("swipes-card-container").innerHTML = `
-              <div class="no-more-courses">
-                <h3>No more courses to swipe</h3>
-                <p>Check back later for more academic matches or explore our course catalog.</p>
-                <a href="${coursesPath}" class="btn-hinge-primary mt-3">Browse All Courses</a>
-              </div>
-            `;
-          }
-        }, 300);
-      }
-    }
-
-    // Define coursesPath for the no more courses message
-    const coursesPath = "<%= courses_path %>";
-
-    // Hook up Skip buttons
-    document.querySelectorAll(".skip-button").forEach((button) => {
-      button.addEventListener("click", showNextCard);
-    });
-
-    // Hook up Save buttons (after form submit)
-    document.querySelectorAll(".save-form").forEach((form) => {
-      form.addEventListener("submit", (e) => {
-        setTimeout(() => showNextCard(), 100); // Delay so the form submits
-      });
-    });
-  });
-</script>
+<!-- Meta tag for courses path -->
+<meta name="courses-path" content="<%= courses_path %>">
 
