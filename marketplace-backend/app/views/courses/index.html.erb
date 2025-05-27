@@ -7,6 +7,78 @@
     <% end %>
   </div>
 
+  <div class="mb-4 text-center">
+    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
+      Filter Courses
+    </button>
+  </div>
+
+  <div class="collapse mb-4" id="filterCollapse">
+    <div class="card card-hinge">
+      <div class="card-body-hinge">
+        <h5 class="card-title mb-3">Filter Courses</h5>
+        <%= form_with url: courses_path, method: :get, class: "row g-3", data: { controller: "filter" } do |f| %>
+          <div class="mb-3">
+            <strong>Labels</strong>
+            <div class="d-flex flex-wrap gap-3">
+              <% Label.all.each do |label| %>
+                <div class="form-check form-check-inline">
+                  <%= check_box_tag "label_ids[]", label.id, Array(params[:label_ids]).map(&:to_s).include?(label.id.to_s), id: "label_#{label.id}", class: "form-check-input" %>
+                  <%= label_tag "label_#{label.id}", label.display_name, class: "form-check-label" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="mb-3">
+            <strong>Quarters</strong>
+            <div class="d-flex flex-wrap gap-3">
+              <% Quarter.all.each do |quarter| %>
+                <div class="form-check form-check-inline">
+                  <%= check_box_tag "quarter_ids[]", quarter.id, Array(params[:quarter_ids]).map(&:to_s).include?(quarter.id.to_s), id: "quarter_#{quarter.id}", class: "form-check-input" %>
+                  <%= label_tag "quarter_#{quarter.id}", quarter.name, class: "form-check-label" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="mb-3">
+            <strong>Instructors</strong>
+            <div class="d-flex flex-wrap gap-3">
+              <% Instructor.all.each do |instructor| %>
+                <div class="form-check form-check-inline">
+                  <%= check_box_tag "instructor_ids[]", instructor.id, Array(params[:instructor_ids]).map(&:to_s).include?(instructor.id.to_s), id: "instructor_#{instructor.id}", class: "form-check-input" %>
+                  <%= label_tag "instructor_#{instructor.id}", instructor.name, class: "form-check-label" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-12 mt-3 d-flex gap-2">
+            <%= f.submit "Apply Filters", class: "btn-hinge-primary" %>
+            <%= link_to "Reset Filters", courses_path, class: "btn btn-outline-secondary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <% label_ids = Array(params[:label_ids]).reject(&:blank?) %>
+  <% quarter_ids = Array(params[:quarter_ids]).reject(&:blank?) %>
+  <% instructor_ids = Array(params[:instructor_ids]).reject(&:blank?) %>
+
+  <% if label_ids.any? || quarter_ids.any? || instructor_ids.any? %>
+    <div class="alert alert-info mb-4">
+      <h6>Active Filters:</h6>
+      <% if label_ids.any? %>
+        <p>Labels: <%= Label.where(id: label_ids).pluck(:display_name).join(", ") %></p>
+      <% end %>
+      <% if quarter_ids.any? %>
+        <p>Quarters: <%= Quarter.where(id: quarter_ids).pluck(:name).join(", ") %></p>
+      <% end %>
+      <% if instructor_ids.any? %>
+        <p>Instructors: <%= Instructor.where(id: instructor_ids).pluck(:name).join(", ") %></p>
+      <% end %>
+    </div>
+  <% end %>
+
   <!-- Pagination Controls -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <div class="text-muted">
