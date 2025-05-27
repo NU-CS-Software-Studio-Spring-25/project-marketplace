@@ -2,6 +2,7 @@ class CoursesController < ApplicationController
   # Skip CSRF token verification for API requests
   skip_before_action :verify_authenticity_token, if: -> { request.format.json? }
   before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user, only: [:swipes]
 
   # GET /courses
   # GET /courses.json
