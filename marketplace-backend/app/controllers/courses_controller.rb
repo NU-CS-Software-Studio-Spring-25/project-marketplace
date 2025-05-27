@@ -168,7 +168,7 @@ class CoursesController < ApplicationController
   # GET /swipes
   def swipes
     saved_ids = current_user.enrollments.pluck(:course_id)
-    @courses = Course.where.not(id: saved_ids)
+    @courses = Course.where.not(id: saved_ids).order(Arel.sql('RANDOM()'))
   end
 
 
