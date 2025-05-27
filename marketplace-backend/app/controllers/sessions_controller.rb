@@ -1,15 +1,26 @@
 class SessionsController < ApplicationController
   before_action :redirect_if_authenticated, only: [:new]
+  ALLOWED_DOMAINS = %w[u.northwestern.edu].freeze
   
   def new
   end
 
   def create 
     user_info = request.env['omniauth.auth']
+    email = user_info['info']['email']
+    domain = email&.split('@')&.last
+
+    unless ALLOWED_DOMAINS.include?(domain)
+      redirect_to login_path,
+        alert: "Please log in with your #{ALLOWED_DOMAINS.join(' / ')} account."
+      return
+    end
+
     user = User.find_or_create_by(uid: user_info['uid'], provider: user_info['provider']) do |u|
       u.name = user_info['info']['name']
-      u.email = user_info['info']['email']
+      u.email = email
     end
+
     session[:user_id] = user.id
     redirect_to root_path, notice: "Signed in as #{user.name}"
   end
