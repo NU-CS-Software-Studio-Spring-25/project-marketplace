@@ -16,6 +16,26 @@ body {
   color: var(--hinge-dark);
 }
 
+/* Add a clear focus indicator for keyboard navigation */
+:focus-visible {
+  outline: 3px solid var(--hinge-primary);
+  outline-offset: 2px;
+}
+
+/* Apply focus indicator to specific interactive elements */
+button:focus-visible,
+a:focus-visible,
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="button"]:focus-visible,
+.form-check-input:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--hinge-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Optional: Add a subtle box-shadow for extra emphasis, adjust color/blur as needed */
+}
+
 /* Navbar styling */
 .navbar-hinge {
   background-color: white !important;
