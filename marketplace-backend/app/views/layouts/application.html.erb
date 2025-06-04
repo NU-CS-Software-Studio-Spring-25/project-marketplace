@@ -38,17 +38,18 @@
   </head>
 
   <body>
-    <%= render 'shared/navbar' %>
-    
+    <header role ="banner">
+        <%= render 'shared/navbar' %>
+    <header>
     <% if flash[:alert] %>
-      <div class="container mt-3">
+      <div class="container mt-3" role = 'alert'>
         <div class="alert alert-danger">
           <%= flash[:alert] %>
         </div>
       </div>
     <% end %>
     
-    <main>
+    <main role="main" >
       <%= yield %>
     </main>
   </body>
