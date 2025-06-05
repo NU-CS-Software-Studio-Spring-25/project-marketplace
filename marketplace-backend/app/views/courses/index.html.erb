@@ -1,14 +1,24 @@
+<% content_for :meta_description do %>
+  Browse our comprehensive course catalog. Filter courses by labels, quarters, and instructors. Find the perfect classes that match your interests and schedule.
+<% end %>
+
 <div class="container mt-4">
   <h1 class="text-center mb-5" style="color: var(--hinge-primary); font-weight: 700;">@course-catalog</h1>
   
   <div class="mb-4 text-center">
-    <%= link_to new_course_path, class: "btn-hinge-primary" do %>
-      <i class="fa-solid fa-plus me-2"></i>Add New Course
+    <%= link_to new_course_path, class: "btn-hinge-primary", aria_label: "Add a new course to the catalog" do %>
+      <i class="fa-solid fa-plus me-2" aria-hidden="true"></i>Add New Course
     <% end %>
   </div>
 
   <div class="mb-4 text-center">
-    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
+    <button class="btn btn-outline-secondary" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#filterCollapse" 
+            aria-expanded="false" 
+            aria-controls="filterCollapse"
+            aria-label="Toggle course filters">
       Filter Courses
     </button>
   </div>
@@ -52,8 +62,11 @@
             </div>
           </div>
           <div class="col-12 mt-3 d-flex gap-2">
-            <%= f.submit "Apply Filters", class: "btn-hinge-primary" %>
-            <%= link_to "Reset Filters", courses_path, class: "btn btn-outline-secondary" %>
+            <%= f.submit "Apply Filters", class: "btn-hinge-primary", aria_label: "Apply selected filters" %>
+            <%= link_to "Reset Filters", 
+                courses_path, 
+                class: "btn btn-outline-secondary",
+                aria_label: "Clear all filters" %>
           </div>
         <% end %>
       </div>
@@ -65,7 +78,7 @@
   <% instructor_ids = Array(params[:instructor_ids]).reject(&:blank?) %>
 
   <% if label_ids.any? || quarter_ids.any? || instructor_ids.any? %>
-    <div class="alert alert-info mb-4">
+    <div class="alert alert-info mb-4" role="status" aria-live="polite">
       <h6>Active Filters:</h6>
       <% if label_ids.any? %>
         <p>Labels: <%= Label.where(id: label_ids).pluck(:display_name).join(", ") %></p>
@@ -81,7 +94,7 @@
 
   <!-- Pagination Controls -->
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <div class="text-muted">
+    <div class="text-muted" role="status" aria-live="polite">
       <% if @courses.respond_to?(:total_count) %>
         Showing <%= @courses.offset_value + 1 %> - <%= [@courses.offset_value + @courses.limit_value, @courses.total_count].min %> 
         of <%= @courses.total_count %> courses
@@ -137,15 +150,15 @@
   <div class="row g-3">
     <% @courses.each do |course| %>
       <div class="">
-        <div class="card card-hinge h-100">
+        <div class="card card-hinge h-100" role="article">
           <div class="card-header-hinge">
-            <span class="course-number-badge"><%= course.course_number %></span>
+            <span class="course-number-badge" aria-label="Course number"><%= course.course_number %></span>
             <h3 class="course-title"><%= course.name %></h3>
             
             <% if course.labels.any? %>
               <div>
                 <% course.labels.each do |label| %>
-                  <span class="badge-hinge"><%= label.display_name %></span>
+                  <span class="badge-hinge" aria-label="Course label: <%= label.display_name %>"><%= label.display_name %></span>
                 <% end %>
               </div>
             <% end %>
@@ -157,13 +170,17 @@
             <% end %>
             
             <div class="d-flex justify-content-between align-items-center mt-3">
-              <%= link_to course_path(course), class: "btn-hinge-outline" do %>
-                <i class="fa-solid fa-circle-info me-1"></i> Details
+              <%= link_to course_path(course), 
+                  class: "btn-hinge-outline",
+                  aria_label: "View details for #{h(course.name)}" do %>
+                <i class="fa-solid fa-circle-info me-1" aria-hidden="true"></i> Details
               <% end %>
               
               <div class="d-flex gap-3">
-                <%= link_to edit_course_path(course), class: "btn btn-outline-secondary" do %>
-                  <i class="fa-solid fa-pen-to-square"></i>
+                <%= link_to edit_course_path(course), 
+                    class: "btn btn-outline-secondary",
+                    aria_label: "Edit #{h(course.name)}" do %>
+                  <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
                 <% end %>
                 
                 <%= button_to course, method: :delete, class: "btn btn-outline-danger", 
@@ -180,8 +197,8 @@
 
   <!-- No courses message -->
   <% if @courses.empty? %>
-    <div class="text-center mt-5">
-      <div class="text-muted mb-3">
+    <div class="text-center mt-5" role="status" aria-live="polite">
+      <div class="text-muted mb-3" aria-hidden="true">
         <i class="fa-solid fa-book fa-3x"></i>
       </div>
       <h3 class="text-muted">No courses found</h3>
@@ -191,7 +208,7 @@
 
   <!-- Kaminari Pagination -->
   <% if @courses.respond_to?(:total_pages) && @courses.total_pages > 1 %>
-    <nav aria-label="Course pagination" class="mt-4">
+    <nav aria-label="Course catalog pagination" class="mt-4">
       <div class="d-flex justify-content-center">
         <%= paginate @courses, 
             theme: 'bootstrap4',

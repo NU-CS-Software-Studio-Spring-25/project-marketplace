@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="<%= content_for(:meta_description) || 'Course Match - Find your perfect classes. Browse, filter, and discover courses that match your interests.' %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= favicon_link_tag 'favicon.svg' %>
@@ -40,7 +41,7 @@
   <body>
     <header role ="banner">
         <%= render 'shared/navbar' %>
-    <header>
+    </header>
     <% if flash[:alert] %>
       <div class="container mt-3" role = 'alert'>
         <div class="alert alert-danger">

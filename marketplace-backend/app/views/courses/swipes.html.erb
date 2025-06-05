@@ -1,26 +1,36 @@
+<% content_for :meta_description do %>
+  Swipe through available courses to find your perfect matches. Quickly browse and save courses that interest you. A fun and efficient way to discover new classes.
+<% end %>
+
 <div class="container mt-4">
   <h1 class="text-center mb-5" style="color: var(--hinge-primary); font-weight: 700;">@cs-courses</h1>
 
   <div class="swipe-container">
     <div id="swipes-card-container">
       <% if @courses.empty? %>
-        <div class="no-more-courses">
+        <div class="no-more-courses" role="status" aria-live="polite">
           <h3>No more courses to swipe</h3>
           <p>Check back later for more academic matches or explore our course catalog.</p>
-          <a href="<%= courses_path %>" class="btn-hinge-primary mt-3">Browse All Courses</a>
+          <a href="<%= courses_path %>" class="btn-hinge-primary mt-3" aria-label="Browse all courses in the catalog">
+            <i class="fa-solid fa-book me-2" aria-hidden="true"></i> Browse All Courses
+          </a>
         </div>
       <% else %>
         <% @courses.each_with_index do |course, index| %>
-          <div class="card card-hinge swipe-card <%= 'd-none' if index != 0 %>">
+          <div class="card card-hinge swipe-card <%= 'd-none' if index != 0 %>" role="article">
             <div class="card-header-hinge">
-              <span class="course-number-badge"><%= course.course_number %></span>
+              <span class="course-number-badge" aria-label="Course number"><%= course.course_number %></span>
               <h2 class="course-title"><%= course.name %></h2>
               
               <% if course.labels.any? %>
                 <div class="mb-3">
                   <ul class="list-unstyled d-inline">
                     <% course.labels.each do |label| %>
-                      <li class="d-inline me-2"><span class="badge-hinge"><%= label.display_name %></span></li>
+                      <li class="d-inline me-2">
+                        <span class="badge-hinge" aria-label="Course label: <%= label.display_name %>">
+                          <%= label.display_name %>
+                        </span>
+                      </li>
                     <% end %>
                   </ul>
                 </div>
@@ -54,7 +64,12 @@
                   <h5 class="section-header">Available in</h5>
                   <ul class="mt-3 list-unstyled">
                     <% course.quarters.each do |quarter| %>
-                      <li><span class="badge-hinge"><i class="fa-regular fa-calendar me-1"></i><%= quarter.name %></span></li>
+                      <li>
+                        <span class="badge-hinge" aria-label="Available in quarter: <%= quarter.name %>">
+                          <i class="fa-regular fa-calendar me-1" aria-hidden="true"></i>
+                          <%= quarter.name %>
+                        </span>
+                      </li>
                     <% end %>
                   </ul>
                 </div>
@@ -65,8 +80,8 @@
                   <h5 class="section-header">Prerequisites</h5>
                   <ul class="mt-3 list-unstyled">
                     <% course.prerequisites.each do |prerequisite| %>
-                      <li class="badge-hinge mb-2">
-                        <i class="fa-solid fa-graduation-cap me-1"></i>
+                      <li class="badge-hinge mb-2" aria-label="Prerequisite course: <%= prerequisite.course_number %> - <%= prerequisite.name %>">
+                        <i class="fa-solid fa-graduation-cap me-1" aria-hidden="true"></i>
                         <%= prerequisite.course_number %> - <%= prerequisite.name %>
                       </li>
                     <% end %>
@@ -75,12 +90,16 @@
               <% end %>
               
               <div class="swipe-buttons">
-                <button class="btn-skip skip-button">
-                  <i class="fa-solid fa-xmark"></i>
+                <button class="btn-skip skip-button" aria-label="Skip this course">
+                  <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                 </button>
                 
-                <%= button_to enrollments_path(course_id: course.id), method: :post, class: "btn-save save-form", form_class: "d-inline" do %>
-                  <i class="fa-solid fa-heart"></i>
+                <%= button_to enrollments_path(course_id: course.id), 
+                    method: :post, 
+                    class: "btn-save save-form", 
+                    form_class: "d-inline",
+                    aria_label: "Save #{h(course.name)} to matches" do %>
+                  <i class="fa-solid fa-heart" aria-hidden="true"></i>
                 <% end %>
               </div>
             </div>

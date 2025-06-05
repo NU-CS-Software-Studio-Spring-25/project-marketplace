@@ -1,5 +1,9 @@
 <% content_for :title, "Your Matches - course-match" %>
 
+<% content_for :meta_description do %>
+  View your saved course matches. See all the courses you've matched with, including course details, match dates, and options to view more information or unmatch.
+<% end %>
+
 <div class="d-flex flex-column min-vh-100">
 
 <div class="container mt-4">
@@ -9,8 +13,8 @@
     <div class="no-more-courses">
       <h3>No matches yet</h3>
       <p>Start swiping to find your perfect academic matches!</p>
-      <a href="<%= swipes_path %>" class="btn-hinge-primary mt-3">
-        <i class="fa-solid fa-fire me-2"></i> Start Swiping
+      <a href="<%= swipes_path %>" class="btn-hinge-primary mt-3" aria-label="Start swiping to find courses">
+        <i class="fa-solid fa-fire me-2" aria-hidden="true"></i> Start Swiping
       </a>
     </div>
   <% else %>
@@ -18,9 +22,9 @@
       <% @enrollments.each do |enrollment| %>
         <% if enrollment.course.present? %>
           <div class="mb-3">
-            <div class="card card-hinge h-100">
+            <div class="card card-hinge h-100" role="article">
               <div class="card-header-hinge">
-                <span class="course-number-badge">
+                <span class="course-number-badge aria-label="Course Number">
                   <%= enrollment.course.course_number.presence || "No Course Number" %>
                 </span>
                 <h3 class="course-title">
@@ -28,7 +32,7 @@
                 </h3>
                 
                 <div class="small text-muted">
-                  <i class="fa-regular fa-clock me-1"></i> Matched on <%= enrollment.created_at.strftime("%b %d, %Y") %>
+                  <i class="fa-regular fa-clock me-1" aria-hidden="true"></i> Matched on <%= enrollment.created_at.strftime("%b %d, %Y") %>
                 </div>
               </div>
               
@@ -41,14 +45,18 @@
                 <% end %>
                 
                 <div class="d-flex mt-4 justify-content-between">
-                  <%= link_to course_path(enrollment.course), class: "btn-hinge-outline" do %>
-                    <i class="fa-solid fa-circle-info me-1"></i> Details
+                  <%= link_to course_path(enrollment.course), 
+                      class: "btn-hinge-outline",
+                      aria_label: "View details for #{h(enrollment.course.name)}" do %>
+                    <i class="fa-solid fa-circle-info me-1" aria-hidden="true"></i> Details
                   <% end %>
                   
-                  <%= button_to enrollment_path(enrollment), method: :delete, 
-                    data: { turbo_confirm: "Are you sure you want to unmatch with this course?" }, 
-                    class: "btn-hinge-primary" do %>
-                    <i class="fa-solid fa-heart-crack me-1"></i> Unmatch
+                  <%= button_to enrollment_path(enrollment), 
+                      method: :delete, 
+                      data: { turbo_confirm: "Are you sure you want to unmatch with this course?" }, 
+                      class: "btn-hinge-primary",
+                      aria_label: "Unmatch with #{h(enrollment.course.name)}" do %>
+                    <i class="fa-solid fa-heart-crack me-1" aria-hidden="true"></i> Unmatch
                   <% end %>
                 </div>
               </div>
@@ -59,8 +67,8 @@
     </div>
     
     <div class="text-center mt-5">
-      <a href="<%= swipes_path %>" class="btn-hinge-primary">
-        <i class="fa-solid fa-fire me-2"></i> Find More Matches
+      <a href="<%= swipes_path %>" class="btn-hinge-primary" aria-label="Find more course matches">
+        <i class="fa-solid fa-fire me-2" aria-hidden="true"></i> Find More Matches
       </a>
     </div>
     </div>
