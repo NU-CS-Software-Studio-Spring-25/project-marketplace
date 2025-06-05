@@ -6,7 +6,7 @@
   <h1 class="text-center mb-5" style="color: var(--hinge-primary); font-weight: 700;">@course-catalog</h1>
   
   <div class="mb-4 text-center">
-    <%= link_to new_course_path, class: "btn-hinge-primary", aria_label: "Add a new course to the catalog" do %>
+    <%= link_to new_course_path, class: "btn-hinge-primary", "aria-label": "Add a new course to the catalog" do %>
       <i class="fa-solid fa-plus me-2" aria-hidden="true"></i>Add New Course
     <% end %>
   </div>
@@ -19,14 +19,14 @@
             aria-expanded="false" 
             aria-controls="filterCollapse"
             aria-label="Toggle course filters">
-      Filter Courses
+      Course Filters
     </button>
   </div>
 
   <div class="collapse mb-4" id="filterCollapse">
     <div class="card card-hinge">
       <div class="card-body-hinge">
-        <h5 class="card-title mb-3">Filter Courses</h5>
+        <h5 class="card-title mb-3">Course Filters</h5>
         <%= form_with url: courses_path, method: :get, class: "row g-3", data: { controller: "filter" } do |f| %>
           <div class="mb-3">
             <button class="btn btn-link p-0 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLabels" aria-expanded="true" aria-controls="collapseLabels" aria-label="Toggle course labels filter">
@@ -83,11 +83,11 @@
             </div>
           </div>
           <div class="col-12 mt-3 d-flex gap-2">
-            <%= f.submit "Apply Filters", class: "btn-hinge-primary", aria_label: "Apply selected filters" %>
+            <%= f.submit "Apply Filters", class: "btn-hinge-primary", "aria-label": "Apply selected filters" %>
             <%= link_to "Reset Filters", 
                 courses_path, 
                 class: "btn btn-outline-secondary",
-                aria_label: "Clear all filters" %>
+                "aria-label": "Clear all filters" %>
           </div>
         <% end %>
       </div>
@@ -128,15 +128,18 @@
 <div class="d-flex align-items-center gap-2">
   <span class="text-muted small">Show:</span>
   <%= link_to request.params.except(:page).merge(per_page: 12), 
-      class: "btn btn-sm per-page-btn #{params[:per_page].to_i == 12 || params[:per_page].blank? ? 'active' : 'btn-outline-secondary'}" do %>
+      class: "btn btn-sm per-page-btn #{params[:per_page].to_i == 12 || params[:per_page].blank? ? 'active' : 'btn-outline-secondary'}",
+      "aria-label": "Show 12 courses per page" do %>
     12
   <% end %>
   <%= link_to request.params.except(:page).merge(per_page: 24), 
-      class: "btn btn-sm per-page-btn #{params[:per_page].to_i == 24 ? 'active' : 'btn-outline-secondary'}" do %>
+      class: "btn btn-sm per-page-btn #{params[:per_page].to_i == 24 ? 'active' : 'btn-outline-secondary'}",
+      "aria-label": "Show 24 courses per page" do %>
     24
   <% end %>
   <%= link_to request.params.except(:page).merge(per_page: 48), 
-      class: "btn btn-sm per-page-btn #{params[:per_page].to_i == 48 ? 'active' : 'btn-outline-secondary'}" do %>
+      class: "btn btn-sm per-page-btn #{params[:per_page].to_i == 48 ? 'active' : 'btn-outline-secondary'}",
+      "aria-label": "Show 48 courses per page" do %>
     48
   <% end %>
 </div>
@@ -193,19 +196,20 @@
             <div class="d-flex justify-content-between align-items-center mt-3">
               <%= link_to course_path(course), 
                   class: "btn-hinge-outline",
-                  aria_label: "View details for #{h(course.name)}" do %>
+                  "aria-label": "View details for #{h(course.name)}" do %>
                 <i class="fa-solid fa-circle-info me-1" aria-hidden="true"></i> Details
               <% end %>
               
               <div class="d-flex gap-3">
                 <%= link_to edit_course_path(course), 
                     class: "btn btn-outline-secondary",
-                    aria_label: "Edit #{h(course.name)}" do %>
+                    "aria-label": "Edit #{h(course.name)}" do %>
                   <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
                 <% end %>
                 
-                <%= button_to course, method: :delete, class: "btn btn-outline-danger", 
-                  form: { data: { turbo_confirm: "Are you sure you want to delete this course?" }, class: "d-inline" } do %>
+                <%= button_to course, method: :delete, class: "btn btn-outline-danger",
+                    "aria-label": "Delete #{h(course.name)}" do %>
+                  <form: { data: { turbo_confirm: "Are you sure you want to delete this course?" }, class: "d-inline" } do %>
                   <i class="fa-solid fa-trash"></i>
                 <% end %>
               </div>

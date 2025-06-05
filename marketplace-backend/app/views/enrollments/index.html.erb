@@ -47,7 +47,7 @@
                 <div class="d-flex mt-4 justify-content-between">
                   <%= link_to course_path(enrollment.course), 
                       class: "btn-hinge-outline",
-                      aria_label: "View details for #{h(enrollment.course.name)}" do %>
+                      "aria-label": "View details for #{h(enrollment.course.name)}" do %>
                     <i class="fa-solid fa-circle-info me-1" aria-hidden="true"></i> Details
                   <% end %>
                   
@@ -55,7 +55,7 @@
                       method: :delete, 
                       data: { turbo_confirm: "Are you sure you want to unmatch with this course?" }, 
                       class: "btn-hinge-primary",
-                      aria_label: "Unmatch with #{h(enrollment.course.name)}" do %>
+                      "aria_label": "Unmatch with #{h(enrollment.course.name)}" do %>
                     <i class="fa-solid fa-heart-crack me-1" aria-hidden="true"></i> Unmatch
                   <% end %>
                 </div>
