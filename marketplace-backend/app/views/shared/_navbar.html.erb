@@ -10,18 +10,18 @@
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
           <a class="nav-link nav-link-hinge <%= current_page?(courses_path) ? 'active' : '' %>" href="<%= courses_path %>">
-            <i class="fa-solid fa-book"></i> Browse
+            <i class="fa-solid fa-book"></i> Catalog
           </a>
         </li>
         <% if current_user %>
           <li class="nav-item">
             <a class="nav-link nav-link-hinge <%= current_page?(swipes_path) ? 'active' : '' %>" href="<%= swipes_path %>">
-              <i class="fa-solid fa-fire"></i> Swipe
+              <i class="fa-solid fa-fire"></i> Explore
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link nav-link-hinge <%= current_page?(saved_classes_path) ? 'active' : '' %>" href="<%= saved_classes_path %>">
-              <i class="fa-solid fa-heart"></i> Matches
+              <i class="fa-solid fa-heart"></i> My Courses
             </a>
           </li>
         <% end %>
