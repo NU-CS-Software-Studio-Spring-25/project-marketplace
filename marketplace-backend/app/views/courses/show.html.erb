@@ -82,8 +82,14 @@
       <% end %>
       
       <div class="d-flex justify-content-center mt-5">
-        <%= button_to enrollments_path(course_id: @course.id), method: :post, class: "btn-hinge-primary" do %>
-          <i class="fa-solid fa-heart me-2"></i> Save to My Matches
+        <% if current_user && current_user.enrollments.exists?(course: @course) %>
+          <button class="btn btn-secondary" disabled>
+            <i class="fa-solid fa-check me-2"></i> Already Saved
+          </button>
+        <% else %>
+          <%= button_to enrollments_path(course_id: @course.id), method: :post, class: "btn-hinge-primary" do %>
+            <i class="fa-solid fa-heart me-2"></i> Save to My Matches
+          <% end %>
         <% end %>
       </div>
     </div>
