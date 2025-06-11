@@ -1,129 +1,97 @@
 name,email
-Abhraneel Sarma,
-Abhratanu Dutta,
-Aleksandar Kuzmanovic,
-Alexandros Nikolaos Lotsos,
-Alok Nidhi Choudhary,
-Amartya Banerjee,
-Anastasia Kurdia,
-Andrew Crotty,
-Andrew James Crotty,
-Anjali Agarwal,
-Aravindan Vijayaraghavan,
-Blaine Rothrock,
-Branden Ghena,
-Branden Robert Ghena,
-Brenna Dee Argall,
-Bryan A. Pardo,
-Bryan Pardo,
-Christopher K Riesbeck,
-Christopher Riesbeck,
-Christos Dimoulas,
-Connor Bain,
-Connor Patrick Bain,
-Daniel Waino Linna,
-Darren Robert Gergle,
-David Demeter,
-David William Demeter,
-Dietrich Alexander Geisler,
-Dietrich Geisler,
-Dmitrii Avdiukhin,
-Edith Elkind,
-Eleanor Mary O'Rourke,
-Emma Alexander,
-Emma Bertat Alexander,
-Eric Michael Evert,
-Esteban Carisimo,
-Fabian E Bustamante,
-Fabián E. Bustamante,
-Florian Andreas Schiffers,
-Hamilton Murrah,
-Han Liu,
-Haoqi Zhang,
-Huiling Hu,
-Ian D Horswill,
-Ian Horswill,
-Jason D Hartline,
-Jason Hartline,
-Jennie M Rogers,
-Jennie Rogers,
-Jeremy D Gilbert,
-Jessica Ruth Hullman,
-Jinshuo Dong,
-John David Villasenor,
-John E Tumblin,
-Joseph Edward Hummel,
-Joseph Hummel,
-Joshua D'Arcy,
-Joshua Harry Perry,
-Joshua Stuart D'arcy,
-Julia Gaudio,
-Kaitlin Nicole Smith,
-Karan Ahuja,
-Kate (Kaitlin) Smith,
-Katherine E Compton,
-Kenneth D Forbus,
-Kenneth Forbus,
-Konstantin Makarychev,
-Kristian Hammond,
-Kristian J Hammond,
-Lawrence A Birnbaum,
-Lily Ge,
-Lydia Tse,
-Maia Cousins,
-Maia Jacobs,
-Maia Lee Jacobs,
-Manling Li,
-Marcelo Aaron Bonilla Worsley,
-Marcelo Worsley,
-Maryam Hedayati,
-Matthew Jeremy Shaver Kay,
-Michael Rubenstein,
-Michael Stephen Horn,
-Michail Mamakos,
-Miklos Zoltan Racz,
-Mohammad Kavousi,
-Mohammed Alam,
-Mohammed Anwarul Alam,
-Nabil Iyad Alshurafa,
-Natalie Melo,
-Nikolaos Hardavellas,
-Nikos Hardavellas,
-Nivedita Arora,
-Noshir Contractor,
-Oleg Duka Evdokimov,
-Oleg Evdokimov,
-Paula Kay Hooper,
-Peng Kang,
-Peter A Dinda,
-Peter Dinda,
-Robby Findler,
-Robert Findler,
-Robert Frederick Voigt,
-Robert Zubek,
-Ruixiang Chai,
-Samir Khuller,
-Samuel Leviton Kriegman,
-Sanchit Kalhan,
-Sara Hodges Owsley,
-Sara Owsley,
-Simone Campanoni,
-Sruti Bhagavatula,
-Sruti Sakuntala Bhagavatula,
-Stephan Moore,
-Todd M Warren,
-Todd Warren,
-Uri Wilensky,
-Uriel J Wilensky,
-V.S. Subrahmanian,
-Venkatramanan Siva Subrahmanian,
-Victoria C Chavez,
-Victoria Concepción Chávez,
-Vincent St-Amour,
-Xiao Wang,
-Xinyu Xing,
-Yan Chen,
-Yiji Zhang,
-Zach Wise,
-Zach Wood-Doughty,
-Zachary David Wood-Doughty,
+Abhraneel Sarma,abhraneel@u.northwestern.edu
+Abhratanu Dutta,adutta@u.northwestern.edu
+Aleksandar Kuzmanovic,akuzma@northwestern.edu
+Alexandros N. Lotsos,alexandroslotsos2026@u.northwestern.edu
+Alok N. Choudhary,a-choudhary@northwestern.edu
+Amartya Banerjee,abbanerjee@u.northwestern.edu
+Anastasia Kurdia,akurdia@northwestern.edu
+Andrew Crotty,andrew.crotty@northwestern.edu
+Anjali Agarwal,anjali.agarwal@northwestern.edu
+Aravindan Vijayaraghavan,aravindv@northwestern.edu
+Blaine Rothrock,blaine@northwestern.edu
+Branden Ghena,branden@northwestern.edu
+Brenna D. Argall,brenna.argall@northwestern.edu
+Bryan A. Pardo,bryan.pardo@northwestern.edu
+Christopher K. Riesbeck,c-riesbeck@northwestern.edu
+Christos Dimoulas,dimoulas@northwestern.edu
+Connor Bain,connor.bain@northwestern.edu
+Daniel W. Linna,daniel.linna@law.northwestern.edu
+Darren R. Gergle,dgergle@northwestern.edu
+David Demeter,DavidDemeterJr.2013@u.northwestern.edu
+Dietrich Geisler,dietrich.geisler@northwestern.edu
+Dmitrii Avdiukhin,dmitrii@northwestern.edu
+Edith Elkind,edith.elkind@northwestern.edu
+Eleanor M. O'Rourke,eorourke@northwestern.edu
+Emma B. Alexander,ealexander@northwestern.edu
+Eric M. Evert,
+Esteban Carisimo,esteban.carisimo@northwestern.edu
+Fabian E. Bustamante,fabianb@northwestern.edu
+Florian A. Schiffers,florian@northwestern.edu
+Hamilton Murrah,hamilton.murrah@northwestern.edu
+Han Liu,hanliu@northwestern.edu
+Haoqi Zhang,hq@northwestern.edu
+Huiling Hu,huiling.hu@northwestern.edu
+Ian D. Horswill,ian@northwestern.edu
+Jason D. Hartline,hartline@northwestern.edu
+Jennie M. Rogers,jennie@northwestern.edu
+Jeremy D. Gilbert,jeremy.gilbert@northwestern.edu
+Jessica R. Hullman,jessica.hullman@northwestern.edu
+Jinshuo Dong,jinshuo@northwestern.edu
+John D. Villasenor,john.villasenor@northwestern.edu
+John E. Tumblin,john.tumblin@northwestern.edu
+Joseph Hummel,joe.hummel@northwestern.edu
+Joshua H. Perry,joshua.perry@northwestern.edu
+Joshua S. D'arcy,joshua.darcy@northwestern.edu
+Julia Gaudio,julia.gaudio@northwestern.edu
+Kaitlin N. Smith,kaitlin.smith@northwestern.edu
+Karan Ahuja,karan.ahuja@northwestern.edu
+Katherine E. Compton,k-compton@northwestern.edu
+Kenneth D. Forbus,forbus@northwestern.edu
+Konstantin Makarychev,konstantin@northwestern.edu
+Kristian J. Hammond,Kristian.Hammond@northwestern.edu
+Lawrence A. Birnbaum,l-birnbaum@northwestern.edu
+Lily Ge,wanqian.ge@northwestern.edu
+Lydia Tse,lydia.tse@northwestern.edu
+Maia L. Jacobs,maia.jacobs@northwestern.edu
+Manling Li,manling.li@northwestern.edu
+Marcelo A. Worsley,marcelo.worsley@northwestern.edu
+Maryam Hedayati,maryam.hedayati@northwestern.edu
+Matthew J. Kay,matthew.kay@northwestern.edu
+Michael Rubenstein,michael.rubenstein@northwestern.edu
+Michael S. Horn,michael.horn@northwestern.edu
+Michail Mamakos,michail.mamakos@northwestern.edu
+Miklos Z. Racz,miklos.racz@northwestern.edu
+Mohammad Kavousi,mohammad.kavousi@northwestern.edu
+Mohammed A. Alam,mohammed.alam@northwestern.edu
+Nabil I. Alshurafa,nabil.alshurafa@northwestern.edu
+Natalie Melo,natalie.melo@northwestern.edu
+Nikolaos Hardavellas,nikos@northwestern.edu
+Nivedita Arora,nivedita@northwestern.edu
+Noshir Contractor,nosh@northwestern.edu
+Oleg D. Evdokimov,olegevdokimov@northwestern.edu
+Paula K. Hooper,paula.hooper@northwestern.edu
+Peng Kang,peng.kang@northwestern.edu
+Peter A. Dinda,pdinda@northwestern.edu
+Robert Findler,robby@northwestern.edu
+Robert F. Voigt,robert.voigt@northwestern.edu
+Robert Zubek,robert.zubek@northwestern.edu
+Ruixiang Chai,ruixiang.chai@northwestern.edu
+Samir Khuller,samir.khuller@northwestern.edu
+Samuel L. Kriegman,samuel.kriegman@northwestern.edu
+Sanchit Kalhan,sanchit.kalhan@northwestern.edu
+Sara H. Owsley,sara.owsley@northwestern.edu
+Simone Campanoni,simone.campanoni@northwestern.edu
+Sruti S. Bhagavatula,sruti.bhagavatula@northwestern.edu
+Stephan Moore,stephan.moore@northwestern.edu
+Todd M. Warren,todd.warren@northwestern.edu
+Uriel J. Wilensky,uriel.wilensky@northwestern.edu
+V.S. Subrahmanian,vss@northwestern.edu
+Victoria C. Chavez,victoria.chavez@northwestern.edu
+Vincent St-Amour,vincent.st-amour@northwestern.edu
+Xiao Wang,xiao.wang@northwestern.edu
+Xinyu Xing,xingyu.xing@northwestern.edu
+Yan Chen,yan.chen@northwestern.edu
+Yiji Zhang,yiji.zhang@northwestern.edu
+Zach Wise,wise@northwestern.edu
+Zachary D. Wood-Doughty,zachary.wood-doughty@northwestern.edu
