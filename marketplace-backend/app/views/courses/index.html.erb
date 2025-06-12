@@ -33,12 +33,12 @@
       <div class="card-body-hinge">
         <h5 class="card-title mb-3">Course Filters</h5>
         <%= form_with url: courses_path, method: :get, class: "row g-3", data: { controller: "filter" } do |f| %>
-          <div class="mb-3">
-            <button class="btn btn-link p-0 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLabels" aria-expanded="true" aria-controls="collapseLabels" aria-label="Toggle course labels filter">
+          <div class="col-md-4 mb-3">
+            <button class="btn btn-link p-0 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLabels" aria-expanded="false" aria-controls="collapseLabels" aria-label="Toggle course labels filter">
               <strong>Labels</strong>
             </button>
-            <div class="collapse show" id="collapseLabels">
-              <div class="d-flex flex-wrap gap-3">
+            <div class="collapse" id="collapseLabels">
+              <div class="d-flex flex-wrap gap-2">
                 <% Label.all.each do |label| %>
                   <div class="form-check form-check-inline">
                     <%= check_box_tag "label_ids[]", label.id, Array(params[:label_ids]).map(&:to_s).include?(label.id.to_s), 
@@ -51,12 +51,12 @@
               </div>
             </div>
           </div>
-          <div class="mb-3">
-            <button class="btn btn-link p-0 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseQuarters" aria-expanded="true" aria-controls="collapseQuarters" aria-label="Toggle course quarters filter">
+          <div class="col-md-4 mb-3">
+            <button class="btn btn-link p-0 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseQuarters" aria-expanded="false" aria-controls="collapseQuarters" aria-label="Toggle course quarters filter">
               <strong>Quarters</strong>
             </button>
-            <div class="collapse show" id="collapseQuarters">
-              <div class="d-flex flex-wrap gap-3">
+            <div class="collapse" id="collapseQuarters">
+              <div class="d-flex flex-wrap gap-2">
                 <% Quarter.all.each do |quarter| %>
                   <div class="form-check form-check-inline">
                     <%= check_box_tag "quarter_ids[]", quarter.id, Array(params[:quarter_ids]).map(&:to_s).include?(quarter.id.to_s), 
@@ -69,12 +69,12 @@
               </div>
             </div>
           </div>
-          <div class="mb-3">
-            <button class="btn btn-link p-0 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructors" aria-expanded="true" aria-controls="collapseInstructors" aria-label="Toggle course instructors filter">
+          <div class="col-md-4 mb-3">
+            <button class="btn btn-link p-0 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructors" aria-expanded="false" aria-controls="collapseInstructors" aria-label="Toggle course instructors filter">
               <strong>Instructors</strong>
             </button>
-            <div class="collapse show" id="collapseInstructors">
-              <div class="d-flex flex-wrap gap-3">
+            <div class="collapse" id="collapseInstructors">
+              <div class="d-flex flex-wrap gap-2">
                 <% Instructor.all.each do |instructor| %>
                   <div class="form-check form-check-inline">
                     <%= check_box_tag "instructor_ids[]", instructor.id, Array(params[:instructor_ids]).map(&:to_s).include?(instructor.id.to_s), 
