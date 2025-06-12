@@ -9,6 +9,12 @@ class CoursesController < ApplicationController
   def index
     @courses = Course.order(:course_number).includes(:instructors, :labels, :quarters, :prerequisites)
     
+    # Apply search query if present
+    if params[:q].present?
+      @courses = @courses.where("name ILIKE ? OR course_number ILIKE ? OR description ILIKE ?", 
+                    "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%")
+    end
+    
     # Apply filters if present, ignoring blank values
     if params[:label_ids].present?
       label_ids = Array(params[:label_ids]).reject(&:blank?)
