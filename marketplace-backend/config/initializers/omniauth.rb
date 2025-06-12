@@ -12,7 +12,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
             scope: 'email,profile',
             prompt: 'select_account',
             image_aspect_ratio: 'square',
-            image_size: 50,
+            image_size: 200,
             access_type: 'offline',
             skip_jwt: true
           }
