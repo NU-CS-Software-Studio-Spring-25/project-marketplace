@@ -1,0 +1,86 @@
+<div class="header">
+  <h1>Course Catalog</h1>
+  <div class="date">Generated on <%= Date.current.strftime('%B %d, %Y') %></div>
+</div>
+
+<% label_ids = Array(params[:label_ids]).reject(&:blank?) %>
+<% quarter_ids = Array(params[:quarter_ids]).reject(&:blank?) %>
+<% instructor_ids = Array(params[:instructor_ids]).reject(&:blank?) %>
+
+<% if label_ids.any? || quarter_ids.any? || instructor_ids.any? %>
+  <div class="filters-summary">
+    <h3>Applied Filters:</h3>
+    <% if label_ids.any? %>
+      <p><strong>Labels:</strong> <%= Label.where(id: label_ids).pluck(:display_name).join(', ') %></p>
+    <% end %>
+    <% if quarter_ids.any? %>
+      <p><strong>Quarters:</strong> <%= Quarter.where(id: quarter_ids).pluck(:name).join(', ') %></p>
+    <% end %>
+    <% if instructor_ids.any? %>
+      <p><strong>Instructors:</strong> <%= Instructor.where(id: instructor_ids).pluck(:name).join(', ') %></p>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="course-grid">
+  <% courses_to_display = request.format.pdf? ? @all_courses : @courses %>
+  <% courses_to_display.each do |course| %>
+    <div class="course-item no-break">
+      <div class="course-header">
+        <div class="course-number"><%= course.course_number %></div>
+        <h2 class="course-title"><%= course.name %></h2>
+        
+        <% if course.labels.any? %>
+          <div class="course-labels">
+            <% course.labels.each do |label| %>
+              <span class="label-badge"><%= label.display_name %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="course-body">
+        <% if course.description.present? %>
+          <div class="course-description">
+            <%= simple_format(course.description) %>
+          </div>
+        <% end %>
+        
+        <div class="course-details">
+          <% if course.instructors.any? %>
+            <div class="detail-section">
+              <strong>Instructors:</strong>
+              <%= course.instructors.map(&:name).join(', ') %>
+            </div>
+          <% end %>
+          
+          <% if course.quarters.any? %>
+            <div class="detail-section">
+              <strong>Quarters:</strong>
+              <%= course.quarters.map(&:name).join(', ') %>
+            </div>
+          <% end %>
+          
+          <% if course.prerequisites.any? %>
+            <div class="detail-section">
+              <strong>Prerequisites:</strong>
+              <%= course.prerequisites.map { |p| "#{p.course_number} - #{p.name}" }.join(', ') %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% if courses_to_display.empty? %>
+  <div style="text-align: center; margin-top: 50px; color: #666;">
+    <h3>No courses found</h3>
+    <p>No courses match the selected filters.</p>
+  </div>
+<% end %>
+
+<div class="footer">
+  <p>Course Catalog - Generated on <%= Time.current.strftime('%B %d, %Y at %I:%M %p') %></p>
+  <p>Total Courses: <%= courses_to_display.count %></p>
+</div> 

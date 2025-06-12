@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= @title || "Course Catalog" %></title>
+    <style>
+      /* PDF-specific styles */
+      body {
+        font-family: 'Helvetica', Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        font-size: 12px;
+        line-height: 1.4;
+        color: #333;
+      }
+      
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #007bff;
+      }
+      
+      .header h1 {
+        color: #007bff;
+        font-size: 28px;
+        margin: 0 0 10px 0;
+        font-weight: bold;
+      }
+      
+      .header .date {
+        color: #666;
+        font-size: 14px;
+      }
+      
+      .filters-summary {
+        background-color: #f8f9fa;
+        padding: 15px;
+        margin-bottom: 25px;
+        border-radius: 5px;
+        border-left: 4px solid #007bff;
+      }
+      
+      .filters-summary h3 {
+        margin: 0 0 10px 0;
+        color: #007bff;
+        font-size: 16px;
+      }
+      
+      .filters-summary p {
+        margin: 5px 0;
+        font-size: 12px;
+      }
+      
+      .course-grid {
+        display: block;
+      }
+      
+      .course-item {
+        border: 1px solid #ddd;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+        page-break-inside: avoid;
+      }
+      
+      .course-header {
+        background-color: #007bff;
+        color: white;
+        padding: 15px;
+      }
+      
+      .course-number {
+        font-weight: bold;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      
+      .course-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin: 0 0 10px 0;
+      }
+      
+      .course-labels {
+        margin-top: 10px;
+      }
+      
+      .label-badge {
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 10px;
+        margin-right: 5px;
+        display: inline-block;
+        margin-bottom: 3px;
+      }
+      
+      .course-body {
+        padding: 15px;
+        background-color: white;
+      }
+      
+      .course-description {
+        margin-bottom: 15px;
+        line-height: 1.5;
+      }
+      
+      .course-details {
+        border-top: 1px solid #eee;
+        padding-top: 10px;
+        font-size: 11px;
+        color: #666;
+      }
+      
+      .detail-section {
+        margin-bottom: 8px;
+      }
+      
+      .detail-label {
+        font-weight: bold;
+        color: #333;
+      }
+      
+      .footer {
+        margin-top: 30px;
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #ddd;
+        font-size: 10px;
+        color: #666;
+      }
+      
+      /* Page break utilities */
+      .page-break {
+        page-break-before: always;
+      }
+      
+      .no-break {
+        page-break-inside: avoid;
+      }
+    </style>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html> 
