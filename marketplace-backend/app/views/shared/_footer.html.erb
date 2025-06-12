@@ -1,10 +1,44 @@
-
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <h5>Course Match</h5>
-        <p class="mb-2">Find your perfect classes</p>
-        <small class="text-muted">© 2025 Course Match. All rights reserved.</small>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <h5 class="footer-title">course-match</h5>
+      <p class="footer-description">Find your perfect academic match. Like a dating app, but for courses!</p>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+      <h6 class="footer-section-title">Explore</h6>
+      <ul class="footer-links">
+        <li><%= link_to "Course Catalog", courses_path, class: "footer-link" %></li>
+        <% if current_user %>
+          <li><%= link_to "Explore Courses", swipes_path, class: "footer-link" %></li>
+          <li><%= link_to "My Courses", saved_classes_path, class: "footer-link" %></li>
+        <% else %>
+          <li><%= link_to "Sign In", login_path, class: "footer-link" %></li>
+        <% end %>
+      </ul>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+      <h6 class="footer-section-title">Connect</h6>
+      <div class="footer-social">
+        <a href="https://github.com/NU-CS-Software-Studio-Spring-25/project-marketplace" class="footer-social-link" aria-label="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="mailto:jovyzhou@u.northwestern.edu" class="footer-social-link" aria-label="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
       </div>
     </div>
   </div>
+  
+  <hr class="footer-divider">
+  
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <small class="footer-copyright">© <%= Date.current.year %> course-match. All rights reserved.</small>
+    </div>
+    <div class="col-md-6 text-md-end">
+      <small class="footer-credits">Made with <i class="fa-solid fa-heart text-danger"></i> for students</small>
+    </div>
+  </div>
+</div>

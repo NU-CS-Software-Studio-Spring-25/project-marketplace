@@ -8,23 +8,147 @@
 
 }
 
+.landing-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+}
 
 .hero-section {
   text-align: center;
-  font-family: 'Varela Round', sans-serif;
-  padding: 3rem 0 3rem 0; /* reduced bottom padding */
   color: rgb(0, 0, 0);
+  max-width: 800px;
 }
 
 .hero-title {
-    font-size: 3.5rem;
-    font-weight: 700px;
-    margin-bottom: 1rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--hinge-primary);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.hero-description {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hero-description p {
+  font-size: 1.1rem;
+  color: #6c757d;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .login-card {
-  background-color: #ffffff;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 2rem;
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e9ecef;
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--hinge-primary);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.login-subtitle {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #6c757d;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.btn-google {
+  background-color: white;
+  border: 2px solid #e9ecef;
+  color: #495057;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.btn-google:hover {
+  background-color: #f8f9fa;
+  border-color: var(--hinge-primary);
+  color: var(--hinge-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-google:focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.1);
+  border-color: var(--hinge-primary);
+}
+
+/* Animation delays */
+.delay-1s {
+  animation-delay: 1s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+
+  .hero-description p {
+    font-size: 1rem;
+  }
+  
+  .login-card {
+    padding: 1.5rem 1rem;
+    margin: 0 1rem;
+  }
+  
+  .landing-page {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero-description p {
+    font-size: 0.95rem;
+  }
+  
+  .login-title {
+    font-size: 1.75rem;
+  }
 }

@@ -2,38 +2,39 @@
   Log in to your Course Match account to access your saved courses, matches, and personalized course recommendations.
 <% end %>
 
-
-<div class= "text-center hero-section ">
-    <h1 class= "hero-title animate__animated animate__backInDown">
-    Tired of choosing courses? 
+<div class="landing-page">
+  <div class="text-center hero-section">
+    <h1 class="hero-title animate__animated animate__backInDown">
+      Tired of choosing courses? 
     </h1>
-    <h1 class = "hero-title animate__animated animate__backInDown"> Don't know what courses to take next quarter? </h1>
-    <h2 class= "animate__animated animate__backInDown"> Course-match is the next best way to find future classes </h2>  
-<div>
-
-<div class="delay-1s login-container">
-  <div class="animate__animated  animate__backInUp  login-card">
-    <div class="text-center mb-4">
-      <i class="animate__animated animate__swing fa-solid fa-heart-pulse fa-3x" style="color: var(--hinge-primary);"></i>
+    <h1 class="hero-title animate__animated animate__backInDown"> 
+      Don't know what courses to take next quarter? 
+    </h1>
+    <h2 class="hero-subtitle animate__animated animate__backInDown"> 
+      course-match is the next best way to find future classes 
+    </h2>
+    <div class="hero-description animate__animated animate__backInDown">
+      <p>Like a dating app, but for courses! Swipe through classes, discover your perfect academic match, and build your ideal schedule. Let our smart matching algorithm connect you with courses that fit your interests, schedule, and academic goals.</p>
     </div>
-    <h1 class="login-title">course-match</h1>
-    <h2 class="login-subtitle">Find your perfect academic match</h2>
-    
-    <% if flash[:alert] %>
-      <div class="alert alert-danger py-2" role="alert">
-        <i class="fa-solid fa-circle-exclamation me-2"></i>
-        <%= flash[:alert] %>
+  </div>
+
+  <div class="delay-1s login-container">  
+    <div class="animate__animated animate__backInUp login-card">
+      <div class="text-center mb-4">
+        <i class="animate__animated animate__swing fa-solid fa-heart-pulse fa-3x" style="color: var(--hinge-primary);"></i>
       </div>
-    <% end %>
-      
-    <div class="d-flex justify-content-center mt-4">
-      <%= form_tag '/auth/google_oauth2', method: :post, class: 'w-100', data: { turbo: false } do %>
-        <div class="d-grid">
-          <%= button_tag type: 'submit', class: 'btn btn-outline-dark btn-lg py-2' do %>
-            <i class="fa-brands fa-google me-2"></i> Sign in with Google
-          <% end %>
-        </div>
-      <% end %>
+      <h1 class="login-title">course-match</h1>
+      <h2 class="login-subtitle">Find your perfect academic match</h2>
+    
+      <div class="d-flex justify-content-center mt-4">
+        <%= form_tag '/auth/google_oauth2', method: :post, class: 'w-100', data: { turbo: false } do %>
+          <div class="d-grid">
+            <%= button_tag type: 'submit', class: 'btn btn-google btn-lg py-2' do %>
+              <i class="fa-brands fa-google me-2"></i> Sign in with Google
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

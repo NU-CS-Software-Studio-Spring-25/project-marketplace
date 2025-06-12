@@ -21,18 +21,7 @@
     </div>
   </div>
 
-  <!-- PDF Download Button -->
-  <div class="text-center mb-4">
-    <%= link_to courses_path(format: :pdf, label_ids: params[:label_ids], quarter_ids: params[:quarter_ids], instructor_ids: params[:instructor_ids], q: params[:q]), 
-        class: "btn btn-outline-dark me-2",
-        target: "_blank",
-        "aria-label": "Download course catalog as PDF" do %>
-      <i class="fa-solid fa-file-pdf me-1" aria-hidden="true"></i> Download PDF
-    <% end %>
-    <small class="text-muted d-block mt-1">Current filters will be applied to the PDF</small>
-  </div>
-
-  <div class="mb-4 text-center">
+  <div class="mb-4 d-flex justify-content-center align-items-center gap-3">
     <button class="btn btn-outline-secondary" 
             type="button" 
             data-bs-toggle="collapse" 
@@ -42,6 +31,16 @@
             aria-label="Toggle course filters">
       Course Filters
     </button>
+    
+    <%= link_to courses_path(format: :pdf, label_ids: params[:label_ids], quarter_ids: params[:quarter_ids], instructor_ids: params[:instructor_ids], q: params[:q]), 
+        class: "btn btn-outline-dark",
+        target: "_blank",
+        "aria-label": "Download course catalog as PDF" do %>
+      <i class="fa-solid fa-file-pdf me-1" aria-hidden="true"></i> Download PDF
+    <% end %>
+  </div>
+  <div class="text-center mb-2">
+    <small class="text-muted">Current filters will be applied to the PDF</small>
   </div>
 
   <div class="collapse mb-4" id="filterCollapse">

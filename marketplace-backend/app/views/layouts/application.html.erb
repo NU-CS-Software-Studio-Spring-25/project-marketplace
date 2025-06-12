@@ -55,11 +55,8 @@
       <%= yield %>
     </main>
 
-
-    <% if controller_name == 'sessions' && action_name == 'new' %>
-        <footer class="bg-dark text-light py-4 mt-5" role ="contentinfo">
-        <%= render 'shared/footer' %>
-        </footer>
-    <% end %>
+    <footer class="footer-hinge" role ="contentinfo">
+      <%= render 'shared/footer' %>
+    </footer>
   </body>
 </html>
