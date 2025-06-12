@@ -30,7 +30,12 @@
         <% if current_user %>
           <li class="nav-item me-3">
             <span class="nav-link nav-link-hinge">
-              <i class="fa-solid fa-user"></i> <%= current_user.email %>
+              <% if current_user.profile_picture_url.present? %>
+                <%= image_tag current_user.profile_picture_url, class: "rounded-circle me-2", style: "width: 32px; height: 32px;" %>
+              <% else %>
+                <i class="fa-solid fa-user"></i>
+              <% end %>
+              <%= current_user.email %>
             </span>
           </li>
           <li class="nav-item">

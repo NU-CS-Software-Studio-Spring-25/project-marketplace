@@ -19,6 +19,12 @@ class SessionsController < ApplicationController
     user = User.find_or_create_by(uid: user_info['uid'], provider: user_info['provider']) do |u|
       u.name = user_info['info']['name']
       u.email = email
+      u.profile_picture_url = user_info['info']['image']
+    end
+
+    # Update profile picture if it has changed
+    if user.profile_picture_url != user_info['info']['image']
+      user.update(profile_picture_url: user_info['info']['image'])
     end
 
     session[:user_id] = user.id
