@@ -4,6 +4,11 @@ class EnrollmentsController < ApplicationController
   def create 
     @course = Course.find(params[:course_id])
     current_user.enrollments.create(course: @course)
+
+    @course.labels.each do |label|
+        current_user.labels << label unless current_user.labels.include?(label)
+    end
+    
     redirect_to swipes_path, notice: "Class was successfully added to your saved classes."
   end
 
@@ -17,7 +22,12 @@ class EnrollmentsController < ApplicationController
 
   def destroy
     @enrollment = current_user.enrollments.find(params[:id])
+    course_labels = @enrollment.course.labels
+
     @enrollment.destroy
+    course_labels.each do |label|
+        current_user.labels.destroy(label) if current_user.labels.include?(label)
+    end
     redirect_to saved_classes_path, notice: "Class was successfully removed from your saved classes."
   end
 
