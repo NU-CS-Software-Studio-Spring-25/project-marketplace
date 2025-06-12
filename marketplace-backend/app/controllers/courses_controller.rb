@@ -26,11 +26,24 @@ class CoursesController < ApplicationController
     # Ensure we get distinct results when using joins
     @courses = @courses.distinct
     
-    # Apply pagination after all filtering is done
-    @courses = @courses.page(params[:page]).per(params[:per_page] || 12)
+    # For PDF, get all courses without pagination
+    if request.format.pdf?
+      @all_courses = @courses
+    else
+      # Apply pagination only for HTML requests
+      @courses = @courses.page(params[:page]).per(params[:per_page] || 12)
+    end
     
     respond_to do |format|
       format.html
+      format.pdf do
+        render pdf: "course_catalog_#{Date.current.strftime('%Y_%m_%d')}",
+               layout: 'pdf',
+               page_size: 'A4',
+               margin: { top: 15, bottom: 15, left: 10, right: 10 },
+               encoding: 'UTF-8',
+               show_as_html: params[:debug].present?
+      end
       format.json { render json: @courses.as_json(include: {
         instructors: { only: [:id, :name, :email] },
         labels: { only: [:id, :name, :display_name] },
