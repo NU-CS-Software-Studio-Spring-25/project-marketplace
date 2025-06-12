@@ -14,8 +14,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
             image_aspect_ratio: 'square',
             image_size: 200,
             access_type: 'offline',
-            skip_jwt: true,
-            redirect_uri: ENV['GOOGLE_REDIRECT_URI']
+            skip_jwt: true
           }
 end
 
