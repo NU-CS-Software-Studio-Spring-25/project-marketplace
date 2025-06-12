@@ -1,0 +1,35 @@
+name: "coursetinder"
+
+services:
+  rails-app:
+    container_name: coursetinder
+    environment:
+      RAILS_ENV: development
+      # Database config environment variables for convenience
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: hi123
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - .:/rails
+    working_dir: /rails
+    command: sleep infinity
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres
+    image: ankane/pgvector
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: hi123
+
+volumes:
+  postgres-data:

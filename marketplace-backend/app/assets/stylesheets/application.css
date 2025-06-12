@@ -7,9 +7,16 @@
  * depending on specificity.
  *
  * Consider organizing styles into separate files for maintainability.
+
+
+
  */
 
 
-
+@import 'animate';
 @import "courses/index";
 @import "courses/show";
+@import "sessions/new";
+
+
+

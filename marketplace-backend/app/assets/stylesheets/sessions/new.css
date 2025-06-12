@@ -1,0 +1,30 @@
+.animate__animated.animate__swing{
+  --animate-duration: 3s;
+    --animate-delay: 4s;
+}
+
+.animate__animated.animate__fadeInDownBig{
+  --animate-duration: 1s;
+
+}
+
+
+.hero-section {
+  text-align: center;
+  font-family: 'Varela Round', sans-serif;
+  padding: 3rem 0 3rem 0; /* reduced bottom padding */
+  color: rgb(0, 0, 0);
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700px;
+    margin-bottom: 1rem;
+}
+
+.login-card {
+  background-color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 2rem;
+}
