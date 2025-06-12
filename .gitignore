@@ -9,3 +9,4 @@
 
 /data/Paper Data/
 /marketplace-backend/.DS_Store
+marketplace-backend/log/*.log
